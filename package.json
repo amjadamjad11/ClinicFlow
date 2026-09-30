@@ -1,0 +1,32 @@
+{
+  "name": "clinicflow",
+  "version": "0.1.0",
+  "description": "A full-stack clinic management and appointment platform built with the MERN stack.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Tests are not configured yet\""
+  },
+  "keywords": [
+    "clinic-management",
+    "healthcare",
+    "appointment-management",
+    "mern",
+    "mongodb",
+    "express",
+    "react",
+    "nodejs"
+  ],
+  "author": "Amjad",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.6.0",
+    "mongoose": "^9.9.4"
+  }
+}
