@@ -1,6 +1,13 @@
 const express = require('express');
 
-const{createDoctor,getDoctors,getDoctor,updateDoctor,deleteDoctor} = require('../controllers/doctorController');
+const {
+    createDoctor,
+    getDoctors,
+    getDoctor,
+    getDoctorSchedule,
+    updateDoctor,
+    deleteDoctor
+} = require('../controllers/doctorController');
 
 const authMiddleware = require("../middleware/authMiddleware");
 
@@ -19,6 +26,13 @@ router.get(
     authMiddleware,
     roleMiddleware("Admin","Doctor","Receptionist"),
     getDoctors
+);
+
+router.get(
+    "/:id/schedule",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    getDoctorSchedule
 );
 
 router.get(
