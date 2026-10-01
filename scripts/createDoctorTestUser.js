@@ -1,3 +1,9 @@
+const dns = require("dns");
+
+// Use Google's DNS resolver so MongoDB Atlas SRV records resolve reliably
+// in this local development environment.
+dns.setServers(["8.8.8.8"]);
+
 const mongoose = require("mongoose");
 // mongoose → connects this temporary script to MongoDB.
 
