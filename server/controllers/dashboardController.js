@@ -14,7 +14,6 @@ const Billing = require("../models/Billing");
 const getDashboardSummary = async (req, res) => {
   // async → allows database operations to use await.
 
-  try {
     const today = new Date();
     // Gets the current server date and time.
 
@@ -408,14 +407,6 @@ const getDashboardSummary = async (req, res) => {
       },
     });
 
-  } catch (error) {
-    // Handles unexpected database or server errors.
-
-    res.status(500).json({
-      status: "error",
-      message: error.message,
-    });
-  }
 };
 
 

@@ -1,161 +1,123 @@
-const Doctor = require('../models/Doctor');
-const Appointment = require('../models/Appointment');
+const Doctor = require("../models/Doctor");
+// Doctor → gives access to the Doctor MongoDB model.
 
-// Create a new doctor
+const Appointment = require("../models/Appointment");
+// Appointment → used to retrieve a doctor's schedule.
+
+
+// CREATE DOCTOR
 const createDoctor = async (req, res) => {
-    try {
-        const doctor = await Doctor.create(req.body);
+    const doctor = await Doctor.create(req.body);
 
-        res.status(201).json({
-            status: "success",
-            data: doctor,
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: "error",
-            message: error.message
-        });
-    }
+    res.status(201).json({
+        status: "success",
+        data: doctor,
+    });
 };
 
-// Get all doctors
+
+// GET ALL DOCTORS
 const getDoctors = async (req, res) => {
-    try {
-        const doctors = await Doctor.find();
+    const doctors = await Doctor.find();
 
-        res.status(200).json({
-            status: "success",
-            results: doctors.length,
-            data: doctors,
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: "error",
-            message: error.message,
-        });
-    }
+    res.status(200).json({
+        status: "success",
+        results: doctors.length,
+        data: doctors,
+    });
 };
 
-// Get a single doctor
+
+// GET ONE DOCTOR
 const getDoctor = async (req, res) => {
-    try {
-        const doctor = await Doctor.findById(req.params.id);
+    const doctor = await Doctor.findById(req.params.id);
 
-        if (!doctor) {
-            return res.status(404).json({
-                status: "error",
-                message: "Doctor not found",
-            });
-        }
-
-        res.status(200).json({
-            status: "success",
-            data: doctor,
-        });
-
-    } catch (error) {
-        res.status(400).json({
+    if (!doctor) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Doctor not found",
         });
     }
+
+    res.status(200).json({
+        status: "success",
+        data: doctor,
+    });
 };
 
-// Get all appointments belonging to a doctor
+
+// GET DOCTOR SCHEDULE
 const getDoctorSchedule = async (req, res) => {
-    try {
-        // Check that the requested doctor exists before searching appointments.
-        const doctor = await Doctor.findById(req.params.id);
+    // Verify that the requested doctor exists.
+    const doctor = await Doctor.findById(req.params.id);
 
-        if (!doctor) {
-            return res.status(404).json({
-                status: "error",
-                message: "Doctor not found",
-            });
-        }
-
-        // Populate patient details so the schedule is useful to the frontend.
-        // Sorting by appointmentDate creates a chronological doctor schedule.
-        const appointments = await Appointment.find({
-            doctor: req.params.id,
-        })
-            .populate("patient", "name phone email")
-            .sort({ appointmentDate: 1 });
-
-        res.status(200).json({
-            status: "success",
-            doctor: {
-                id: doctor._id,
-                name: doctor.name,
-                specialization: doctor.specialization,
-            },
-            results: appointments.length,
-            data: appointments,
-        });
-
-    } catch (error) {
-        res.status(500).json({
+    if (!doctor) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Doctor not found",
         });
     }
+
+    // Get appointments belonging to this doctor.
+    const appointments = await Appointment.find({
+        doctor: req.params.id,
+    })
+        .populate("patient", "name phone email")
+        .sort({ appointmentDate: 1 });
+
+    res.status(200).json({
+        status: "success",
+        doctor: {
+            id: doctor._id,
+            name: doctor.name,
+            specialization: doctor.specialization,
+        },
+        results: appointments.length,
+        data: appointments,
+    });
 };
 
-// Update a doctor
+
+// UPDATE DOCTOR
 const updateDoctor = async (req, res) => {
-    try {
-        const doctor = await Doctor.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true,
-            }
-        );
-
-        if (!doctor) {
-            return res.status(404).json({
-                status: "error",
-                message: "Doctor not found",
-            });
+    const doctor = await Doctor.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+            new: true,
+            runValidators: true,
         }
+    );
 
-        res.status(200).json({
-            status: "success",
-            data: doctor,
-        });
-    } catch (error) {
-        res.status(400).json({
+    if (!doctor) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Doctor not found",
         });
     }
+
+    res.status(200).json({
+        status: "success",
+        data: doctor,
+    });
 };
 
-// Delete a doctor
+
+// DELETE DOCTOR
 const deleteDoctor = async (req, res) => {
-    try {
-        const doctor = await Doctor.findByIdAndDelete(req.params.id);
+    const doctor = await Doctor.findByIdAndDelete(req.params.id);
 
-        if (!doctor) {
-            return res.status(404).json({
-                status: "error",
-                message: "Doctor not found",
-            });
-        }
-
-        res.status(200).json({
-            status: "success",
-            message: "Doctor deleted successfully",
-            data: doctor,
-        });
-    } catch (error) {
-        res.status(400).json({
+    if (!doctor) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Doctor not found",
         });
     }
+
+    // 204 → successful deletion with no response body.
+    res.status(204).send();
 };
+
 
 module.exports = {
     createDoctor,

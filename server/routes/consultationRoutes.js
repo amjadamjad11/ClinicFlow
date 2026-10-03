@@ -2,13 +2,13 @@ const express = require("express");
 // express → framework used to create HTTP API routes.
 
 const {
-  createConsultation,
-  getConsultations,
-  getConsultation,
-  updateConsultation,
-  deleteConsultation,
+    createConsultation,
+    getConsultations,
+    getConsultation,
+    updateConsultation,
+    deleteConsultation,
 } = require("../controllers/consultationController");
-// Imports the functions that handle Consultation API operations.
+// Consultation controllers → contain the business logic for Consultation APIs.
 
 const authMiddleware = require("../middleware/authMiddleware");
 // authMiddleware → verifies that the request contains a valid JWT.
@@ -16,48 +16,58 @@ const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
 // roleMiddleware → checks whether the logged-in user's role is allowed.
 
+const asyncHandler = require("../middleware/asyncHandler");
+// asyncHandler → forwards rejected async controller errors
+// to the centralized error middleware.
+
 const router = express.Router();
-// Creates a separate group of Consultation routes.
+// Router → groups all Consultation-related API routes.
 
+
+// CREATE CONSULTATION
 router.post(
-  "/",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor"),
-  createConsultation
+    "/",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor"),
+    asyncHandler(createConsultation)
 );
-// POST /api/consultations → Admin and Doctor can create consultations.
 
+
+// GET ALL CONSULTATIONS
 router.get(
-  "/",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor", "Receptionist"),
-  getConsultations
+    "/",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getConsultations)
 );
-// GET /api/consultations → All authenticated roles can view consultations.
 
+
+// GET ONE CONSULTATION
 router.get(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor", "Receptionist"),
-  getConsultation
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getConsultation)
 );
-// GET /api/consultations/:id → All authenticated roles can view one consultation.
 
+
+// UPDATE CONSULTATION
 router.put(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor"),
-  updateConsultation
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor"),
+    asyncHandler(updateConsultation)
 );
-// PUT /api/consultations/:id → Admin and Doctor can update consultations.
 
+
+// DELETE CONSULTATION
 router.delete(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin"),
-  deleteConsultation
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin"),
+    asyncHandler(deleteConsultation)
 );
-// DELETE /api/consultations/:id → Only Admin can delete consultations.
+
 
 module.exports = router;
-// Exports the router so server.js can use these routes.
+// Exports the Consultation router so server.js can mount it.

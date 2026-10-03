@@ -2,67 +2,70 @@ const express = require("express");
 // express → framework used to create HTTP API routes.
 
 const {
-  createPrescription,
-  getPrescriptions,
-  getPrescription,
-  updatePrescription,
-  deletePrescription,
+    createPrescription,
+    getPrescriptions,
+    getPrescription,
+    updatePrescription,
+    deletePrescription,
 } = require("../controllers/prescriptionController");
-// Imports the Prescription controller functions.
+// Prescription controllers → contain Prescription business logic.
 
 const authMiddleware = require("../middleware/authMiddleware");
-// authMiddleware → verifies that the request contains a valid JWT.
+// authMiddleware → verifies the JWT.
 
 const roleMiddleware = require("../middleware/roleMiddleware");
-// roleMiddleware → checks whether the logged-in user's role is allowed.
+// roleMiddleware → checks the user's role.
+
+const asyncHandler = require("../middleware/asyncHandler");
+// asyncHandler → forwards rejected async errors to errorMiddleware.
 
 const router = express.Router();
-// Creates a separate group of Prescription routes.
+// Router → groups Prescription API endpoints.
+
 
 // CREATE
 router.post(
-  "/",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor"),
-  createPrescription
+    "/",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor"),
+    asyncHandler(createPrescription)
 );
-// POST /api/prescriptions → Admin and Doctor can create prescriptions.
+
 
 // GET ALL
 router.get(
-  "/",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor", "Receptionist"),
-  getPrescriptions
+    "/",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getPrescriptions)
 );
-// GET /api/prescriptions → All authenticated roles can view prescriptions.
+
 
 // GET ONE
 router.get(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor", "Receptionist"),
-  getPrescription
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getPrescription)
 );
-// GET /api/prescriptions/:id → All authenticated roles can view one prescription.
+
 
 // UPDATE
 router.put(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin", "Doctor"),
-  updatePrescription
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin", "Doctor"),
+    asyncHandler(updatePrescription)
 );
-// PUT /api/prescriptions/:id → Admin and Doctor can update prescriptions.
+
 
 // DELETE
 router.delete(
-  "/:id",
-  authMiddleware,
-  roleMiddleware("Admin"),
-  deletePrescription
+    "/:id",
+    authMiddleware,
+    roleMiddleware("Admin"),
+    asyncHandler(deletePrescription)
 );
-// DELETE /api/prescriptions/:id → Only Admin can delete prescriptions.
+
 
 module.exports = router;
-// Exports the router so server.js can use these routes.

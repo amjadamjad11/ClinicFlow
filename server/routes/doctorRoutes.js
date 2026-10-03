@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require("express");
+// express → framework used to create HTTP API routes.
 
 const {
     createDoctor,
@@ -6,54 +7,75 @@ const {
     getDoctor,
     getDoctorSchedule,
     updateDoctor,
-    deleteDoctor
-} = require('../controllers/doctorController');
+    deleteDoctor,
+} = require("../controllers/doctorController");
+// Doctor controllers → contain Doctor business logic.
 
 const authMiddleware = require("../middleware/authMiddleware");
+// authMiddleware → verifies the JWT.
 
 const roleMiddleware = require("../middleware/roleMiddleware");
+// roleMiddleware → checks the user's role.
+
+const asyncHandler = require("../middleware/asyncHandler");
+// asyncHandler → forwards rejected async errors to errorMiddleware.
 
 const router = express.Router();
+// Router → groups all Doctor API routes.
 
-router.post("/",
+
+// CREATE DOCTOR
+router.post(
+    "/",
     authMiddleware,
     roleMiddleware("Admin"),
-    createDoctor
+    asyncHandler(createDoctor)
 );
 
+
+// GET ALL DOCTORS
 router.get(
     "/",
     authMiddleware,
-    roleMiddleware("Admin","Doctor","Receptionist"),
-    getDoctors
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getDoctors)
 );
 
+
+// GET DOCTOR SCHEDULE
 router.get(
     "/:id/schedule",
     authMiddleware,
     roleMiddleware("Admin", "Doctor", "Receptionist"),
-    getDoctorSchedule
+    asyncHandler(getDoctorSchedule)
 );
 
+
+// GET ONE DOCTOR
 router.get(
     "/:id",
     authMiddleware,
-    roleMiddleware("Admin","Doctor","Receptionist"),
-    getDoctor
+    roleMiddleware("Admin", "Doctor", "Receptionist"),
+    asyncHandler(getDoctor)
 );
 
+
+// UPDATE DOCTOR
 router.put(
     "/:id",
     authMiddleware,
     roleMiddleware("Admin"),
-    updateDoctor
+    asyncHandler(updateDoctor)
 );
 
+
+// DELETE DOCTOR
 router.delete(
     "/:id",
     authMiddleware,
     roleMiddleware("Admin"),
-    deleteDoctor
+    asyncHandler(deleteDoctor)
 );
+
 
 module.exports = router;

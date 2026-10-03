@@ -1,212 +1,212 @@
 const Patient = require("../models/Patient");
+// Patient → gives us access to the Patient MongoDB model.
+
 const Appointment = require("../models/Appointment");
+// Appointment → used to retrieve the patient's appointment history.
+
 const Consultation = require("../models/Consultation");
+// Consultation → used to retrieve consultations connected to appointments.
+
 const Prescription = require("../models/Prescription");
+// Prescription → used to retrieve prescriptions connected to consultations.
+
 const Billing = require("../models/Billing");
+// Billing → used to retrieve billing records connected to consultations.
 
-const createPatient = async (req , res) => {
-    try{
-        const patient = await Patient.create(req.body);
-        res.status(201).json({
-            status: "success",
-            data: patient,
-        });
-    }catch(error){
-        res.status(400).json({
-            status:"error",
-            message: error.message,
-        });
-    }
+
+// CREATE PATIENT
+const createPatient = async (req, res) => {
+    // asyncHandler catches unexpected errors and sends them
+    // to the centralized error middleware.
+    const patient = await Patient.create(req.body);
+
+    res.status(201).json({
+        status: "success",
+        data: patient,
+    });
 };
 
-const getPatients = async (req, res) =>{
-    try{
-        const patient = await Patient.find();
-        res.status(200).json({
-            status: "success",
-            data: patient,
-        });
-    }catch(error){
-        res.status(400).json({
-            status:"error",
-            message: error.message,
-        });
-    }
+
+// GET ALL PATIENTS
+const getPatients = async (req, res) => {
+    // Find all patients from MongoDB.
+    const patients = await Patient.find();
+
+    res.status(200).json({
+        status: "success",
+        data: patients,
+    });
 };
 
+
+// GET ONE PATIENT
 const getPatient = async (req, res) => {
-    try{
-        const patient = await Patient.findById(req.params.id);
+    // Find a patient using the ID from the URL.
+    const patient = await Patient.findById(req.params.id);
 
-        if (!patient){
-            return res.status(404).json({
-                status: "error",
-                message: "Patient not found",
-            });
-        }
-        res.status(200).json({
-            status: "success",
-            data: patient,
-        });
-    }catch(error){
-        res.status(400).json({
-            status:"error",
-            message: error.message,
+    // Return 404 when the requested patient doesn't exist.
+    if (!patient) {
+        return res.status(404).json({
+            status: "error",
+            message: "Patient not found",
         });
     }
+
+    res.status(200).json({
+        status: "success",
+        data: patient,
+    });
 };
 
+
+// UPDATE PATIENT
 const updatePatient = async (req, res) => {
-    try{
-        const patient = await Patient.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true,
-            }
-        );
-        if(!patient){
-            return res.status(404).json({
-                status: "error",
-                message: "Patient not found",
-            });
+    // Find the patient and update it.
+    // runValidators → makes Mongoose apply schema validation
+    // to the updated values.
+    const patient = await Patient.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+            new: true,
+            runValidators: true,
         }
-        res.status(200).json({
-            status: "success",
-            data: patient,
-        });
-    }catch(error){
-        res.status(400).json({
+    );
+
+    // Return 404 when the requested patient doesn't exist.
+    if (!patient) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Patient not found",
         });
     }
+
+    res.status(200).json({
+        status: "success",
+        data: patient,
+    });
 };
 
+
+// DELETE PATIENT
 const deletePatient = async (req, res) => {
-    try{
-        const patient = await Patient.findByIdAndDelete(req.params.id);
-        if(!patient){
-            return res.status(404).json({
-                status: "error",
-                message: "Patient not found",
-            });
-        }
-        res.status(204).json({
-            status: "success",
-            message: "Patient deleted successfully",
-            data: patient,
-        });
-    }catch(error){
-        res.status(400).json({
+    // Find and remove the patient from MongoDB.
+    const patient = await Patient.findByIdAndDelete(req.params.id);
+
+    // Return 404 when the requested patient doesn't exist.
+    if (!patient) {
+        return res.status(404).json({
             status: "error",
-            message: error.message,
+            message: "Patient not found",
         });
     }
+
+    res.status(204).json({
+        status: "success",
+        message: "Patient deleted successfully",
+        data: patient,
+    });
 };
+
+
+// GET PATIENT HISTORY
 const getPatientHistory = async (req, res) => {
-  try {
-    // req.params.id → gets the patient ID from /api/patients/:id/history.
+    // req.params.id → gets the patient ID from
+    // /api/patients/:id/history.
     const patientId = req.params.id;
 
-    // Find the patient first so we don't return history for a nonexistent patient.
+    // Find the patient first so we don't return history
+    // for a nonexistent patient.
     const patient = await Patient.findById(patientId);
 
     if (!patient) {
-      return res.status(404).json({
-        status: "error",
-        message: "Patient not found",
-      });
+        return res.status(404).json({
+            status: "error",
+            message: "Patient not found",
+        });
     }
 
     // Find all appointments belonging to this patient.
     const appointments = await Appointment.find({
-      patient: patientId,
+        patient: patientId,
     })
-      .populate("doctor", "name specialization")
-      .sort({ appointmentDate: -1 });
+        .populate("doctor", "name specialization")
+        .sort({ appointmentDate: -1 });
 
     // Get appointment IDs so consultations can be connected through them.
     const appointmentIds = appointments.map(
-      (appointment) => appointment._id
+        (appointment) => appointment._id
     );
 
     // Find consultations belonging to the patient's appointments.
     const consultations = await Consultation.find({
-      appointment: { $in: appointmentIds },
+        appointment: { $in: appointmentIds },
     })
-      .populate({
-        path: "appointment",
-        populate: [
-          {
-            path: "patient",
-            select: "name phone email",
-          },
-          {
-            path: "doctor",
-            select: "name specialization",
-          },
-        ],
-      })
-      .sort({ createdAt: -1 });
+        .populate({
+            path: "appointment",
+            populate: [
+                {
+                    path: "patient",
+                    select: "name phone email",
+                },
+                {
+                    path: "doctor",
+                    select: "name specialization",
+                },
+            ],
+        })
+        .sort({ createdAt: -1 });
 
-    // Get consultation IDs so prescriptions and billing can be retrieved.
+    // Get consultation IDs so prescriptions and billing
+    // can be retrieved.
     const consultationIds = consultations.map(
-      (consultation) => consultation._id
+        (consultation) => consultation._id
     );
 
     // Find prescriptions connected to those consultations.
     const prescriptions = await Prescription.find({
-      consultation: { $in: consultationIds },
+        consultation: { $in: consultationIds },
     })
-      .populate({
-        path: "consultation",
-        populate: {
-          path: "appointment",
-          populate: {
-            path: "doctor",
-            select: "name specialization",
-          },
-        },
-      })
-      .sort({ createdAt: -1 });
+        .populate({
+            path: "consultation",
+            populate: {
+                path: "appointment",
+                populate: {
+                    path: "doctor",
+                    select: "name specialization",
+                },
+            },
+        })
+        .sort({ createdAt: -1 });
 
     // Find billing records connected to those consultations.
     const billing = await Billing.find({
-      consultation: { $in: consultationIds },
+        consultation: { $in: consultationIds },
     })
-      .populate({
-        path: "consultation",
-        populate: {
-          path: "appointment",
-          populate: {
-            path: "doctor",
-            select: "name specialization",
-          },
+        .populate({
+            path: "consultation",
+            populate: {
+                path: "appointment",
+                populate: {
+                    path: "doctor",
+                    select: "name specialization",
+                },
+            },
+        })
+        .sort({ createdAt: -1 });
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            patient,
+            appointments,
+            consultations,
+            prescriptions,
+            billing,
         },
-      })
-      .sort({ createdAt: -1 });
-
-    return res.status(200).json({
-      status: "success",
-      data: {
-        patient,
-        appointments,
-        consultations,
-        prescriptions,
-        billing,
-      },
     });
-  } catch (error) {
-    console.error("Get patient history error:", error);
-
-    return res.status(500).json({
-      status: "error",
-      message: "Failed to retrieve patient history",
-    });
-  }
 };
+
 
 module.exports = {
     createPatient,
@@ -216,3 +216,5 @@ module.exports = {
     deletePatient,
     getPatientHistory,
 };
+// Exports all Patient controller functions so patientRoutes.js
+// can connect them to API endpoints.

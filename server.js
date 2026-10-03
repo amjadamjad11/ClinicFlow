@@ -14,7 +14,7 @@ require("dotenv").config();
 const express = require("express");
 // express → backend framework for Node.js.
 // Why? → We use Express to create the ClinicFlow API.
-
+const helmet = require("helmet");
 const connectDB = require("./server/config/db");
 // connectDB → our MongoDB connection function.
 // Why? → ClinicFlow needs MongoDB before the API starts.
@@ -39,11 +39,15 @@ const billingRoutes = require("./server/routes/billingRoutes");
 
 const dashboardRoutes = require("./server/routes/dashboardRoutes");
 
+const errorMiddleware = require("./server/middleware/errorMiddleware");
+
 const app = express();
+
+app.use(helmet());
 
 const PORT = 5000;
 
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 
 app.use("/api/patients", patientRoutes);
 
@@ -71,6 +75,18 @@ app.get("/api/health", (req, res) => {
     message: "ClinicFlow API is healthy!",
   });
 });
+
+app.use((req, res, next) => {
+  // This middleware handles requests that did not match any ClinicFlow route.
+  // Why? → APIs should return a consistent JSON 404 response instead of Express's default HTML response.
+  const error = new Error(`Route not found: ${req.method} ${req.originalUrl}`);
+
+  error.statusCode = 404;
+
+  next(error);
+});
+
+app.use(errorMiddleware);
 
 const startServer = async () => {
   try {
