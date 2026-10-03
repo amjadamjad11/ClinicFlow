@@ -149,3 +149,26 @@ ClinicFlow follows a modular full-stack architecture.
                                              |
                                              v
                                        MongoDB Atlas
+
+
+
+## Frontend Development
+
+### v1.1.0 — Frontend Foundation
+
+The ClinicFlow frontend has been initialized using React and Vite.
+
+#### Frontend Stack
+
+- React 19
+- Vite 8
+- JavaScript (ES Modules)
+- Oxlint for linting
+
+#### Frontend Development Server
+
+The React frontend runs independently from the backend:
+
+```text
+Frontend → http://localhost:5173
+Backend  → http://localhost:5000
