@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "echo \"Tests are not configured yet\""
+    "test": "echo \"ClinicFlow API tests are currently verified manually\""
   },
   "keywords": [
     "clinic-management",

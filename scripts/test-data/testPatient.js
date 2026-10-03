@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const connectDB = require("./config/db");
+const connectDB = require("../../server/config/db");
 
-const Patient = require("./models/Patient");
+const Patient = require("../../server/models/Patient");
 
 const testPatient = async () => {
     try{
