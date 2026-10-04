@@ -172,3 +172,43 @@ The React frontend runs independently from the backend:
 ```text
 Frontend → http://localhost:5173
 Backend  → http://localhost:5000
+
+
+
+### v1.3.0 — Frontend Authentication
+
+ClinicFlow frontend authentication has been connected to the existing backend authentication API.
+
+#### Authentication Architecture
+
+The frontend now uses React Context to maintain authentication state across the application.
+
+```text
+LoginPage
+    ↓
+Authentication API
+    ↓
+JWT + User Information
+    ↓
+AuthContext
+    ↓
+Application Components
+
+### v1.3.0 — Frontend Authentication
+
+ClinicFlow frontend authentication has been connected to the existing backend authentication API.
+
+#### Authentication Architecture
+
+The frontend uses React Context to maintain authentication state across the application.
+
+```text
+LoginPage
+    ↓
+Authentication API
+    ↓
+JWT + User Information
+    ↓
+AuthContext
+    ↓
+ProtectedRoute / Application Components

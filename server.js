@@ -15,6 +15,7 @@ const express = require("express");
 // express → backend framework for Node.js.
 // Why? → We use Express to create the ClinicFlow API.
 const helmet = require("helmet");
+const cors = require("cors");
 const connectDB = require("./server/config/db");
 // connectDB → our MongoDB connection function.
 // Why? → ClinicFlow needs MongoDB before the API starts.
@@ -42,6 +43,12 @@ const dashboardRoutes = require("./server/routes/dashboardRoutes");
 const errorMiddleware = require("./server/middleware/errorMiddleware");
 
 const app = express();
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+    })
+);
 
 app.use(helmet());
 
