@@ -1,23 +1,20 @@
-function App(){
-  return(
-    <div>
-      <header>
-        <h1>ClinicFlow</h1>
-        <p>
-          Clinic Management & Appointment Platform
-        </p>
-      </header>
-      <main>
-        <section>
-          <h2>Welcome to ClinicFlow</h2>
-          <p>
-            Manage patients, doctors, appointments,
-            consultations, prescriptions, and billing
-            from one platform.
-          </p>
-        </section>
-      </main>
-    </div>
-  );
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import AppLayout from "./layouts/AppLayout";
+import LoginPage from "./pages/LoginPage";
+
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route element={<AppLayout />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 export default App;
