@@ -212,3 +212,92 @@ JWT + User Information
 AuthContext
     ↓
 ProtectedRoute / Application Components
+
+
+## v1.4.0 — Frontend Patient Management
+
+### Patient Management Features
+
+The frontend now provides the initial patient-management workflow.
+
+#### Patient List
+
+- Displays patients retrieved from the ClinicFlow backend.
+- Shows patient name, date of birth, gender, phone number, and email.
+- Provides navigation to create a new patient.
+- Provides navigation to individual patient records.
+
+#### Create Patient
+
+- Provides a React form for registering new patients.
+- Sends patient information to the backend Patient API.
+- Displays success and error messages.
+- Clears the form after successful creation.
+- Newly created patients appear in the patient list.
+
+#### Patient Details
+
+- Uses the patient's MongoDB `_id` through a dynamic React Router route.
+- Retrieves the selected patient's information from the backend.
+- Displays personal and medical information.
+- Provides navigation back to the patient list.
+
+### Frontend Patient Flow
+
+```text
+Patient List
+    ↓
+Create Patient
+    ↓
+POST /api/patients
+    ↓
+MongoDB
+    ↓
+Patient List
+
+#### Edit Patient
+
+- Provides an edit form for existing patient records.
+- Loads the patient's current information before editing.
+- Allows authorized users to update patient information.
+- Sends changes to the backend using the Patient update API.
+- Redirects to the updated patient details after a successful save.
+- Changes are persisted in MongoDB.
+
+#### Delete Patient
+
+- Provides an Admin-only patient deletion control.
+- Requires confirmation before permanently deleting a patient.
+- Sends the deletion request to the backend Patient API.
+- Handles the backend `204 No Content` response correctly.
+- Redirects to the patient list after successful deletion.
+- Deleted patients no longer appear in the patient list.
+- Frontend role checks improve the user experience, while backend RBAC provides the actual authorization.
+
+### Complete Patient CRUD Workflow
+
+ClinicFlow now supports the complete initial frontend CRUD workflow:
+
+```text
+Create
+  ↓
+POST /api/patients
+  ↓
+MongoDB
+
+Read
+  ↓
+GET /api/patients
+GET /api/patients/:id
+
+Update
+  ↓
+PUT /api/patients/:id
+  ↓
+MongoDB
+
+Delete
+  ↓
+DELETE /api/patients/:id
+  ↓
+MongoDB

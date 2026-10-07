@@ -28,6 +28,8 @@ function Navbar() {
                         {/* Dashboard → private page available after authentication. */}
                         <Link to="/dashboard">Dashboard</Link>
 
+                        <Link to="/patients">Patients</Link>
+
                         {/* Display the authenticated user's name and role. */}
                         <span>
                             {user.name} ({user.role})
