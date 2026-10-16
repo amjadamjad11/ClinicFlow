@@ -301,3 +301,49 @@ Delete
 DELETE /api/patients/:id
   ↓
 MongoDB
+
+
+### Reusable Button Component
+
+- Created `client/src/components/Button.jsx`.
+- Added `primary`, `secondary`, and `danger` button variants.
+- Added matching CSS styles in `client/src/styles/global.css`.
+- Supports configurable button type, disabled state, click handler, and child content.
+- Integrated the reusable primary button into `CreatePatientPage.jsx`.
+- Verified frontend lint and production build successfully.
+
+
+
+## v1.5.0 — Frontend UI Foundation
+
+### Global Styling
+
+- Added `client/src/styles/global.css` as the shared stylesheet.
+- Established consistent typography, spacing, links, buttons, forms, tables, and page layout.
+- Added responsive styling for smaller screens.
+- Fixed form input text visibility by explicitly setting readable text and background colors.
+- Added visible focus states and disabled-field styling.
+
+### Reusable UI Components
+
+Created reusable React components in `client/src/components/`:
+
+- `Button.jsx` — configurable button with primary, secondary, and danger variants.
+- `Input.jsx` — reusable labelled input supporting input types, required fields, patterns, and autocomplete.
+- `Select.jsx` — reusable labelled dropdown with configurable options.
+- `Textarea.jsx` — reusable labelled multiline text field.
+
+### Patient Form Integration
+
+- Refactored `CreatePatientPage.jsx` to use the reusable Button, Input, Select, and Textarea components.
+- Preserved the existing React form state and change-handling logic.
+- Preserved required-field and 10-digit phone validation.
+- Preserved the existing backend patient-creation API integration.
+- Added consistent styling across all seven patient fields.
+- Verified successful patient creation and confirmed that the new patient appears in the Patients list.
+
+### Verification
+
+- `npm run lint` — passed with zero warnings and zero errors.
+- `npm run build` — production build completed successfully.
+- Browser test — patient creation and patient-list visibility verified.

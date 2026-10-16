@@ -1,9 +1,14 @@
-// CreatePatientPage → form for registering a new ClinicFlow patient.
-// Why? → Admin and Receptionist users need a frontend
-// interface for creating patient records.
+
+ // CreatePatientPage → form for registering a new ClinicFlow patient.
+ // Why? → Admin and Receptionist users need a frontend
+ // interface for creating patient records.
 
 import { useState } from "react";
 import { createPatient } from "../services/api";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Select from "../components/Select";
+import Textarea from "../components/Textarea";
 
 function CreatePatientPage() {
     // formData → stores all values entered by the user.
@@ -17,17 +22,11 @@ function CreatePatientPage() {
         medicalHistory: "",
     });
 
-    // message → displays a successful patient creation message.
     const [message, setMessage] = useState("");
-
-    // error → displays an API error when patient creation fails.
     const [error, setError] = useState("");
-
-    // loading → prevents repeated form submission while the request is running.
     const [loading, setLoading] = useState(false);
 
-    // handleChange → updates the matching form field whenever
-    // the user types or selects a value.
+    // handleChange → updates the field identified by its name.
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -37,7 +36,7 @@ function CreatePatientPage() {
         }));
     };
 
-    // handleSubmit → sends the completed patient form to the backend.
+    // handleSubmit → sends the completed form to the backend API.
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -46,12 +45,12 @@ function CreatePatientPage() {
         setLoading(true);
 
         try {
-            // createPatient → sends POST /api/patients with the JWT.
+            // createPatient → sends the patient data to the backend.
             await createPatient(formData);
 
             setMessage("Patient created successfully.");
 
-            // Clear the form after successful creation.
+            // Clear every field after successful creation.
             setFormData({
                 name: "",
                 dateOfBirth: "",
@@ -72,149 +71,101 @@ function CreatePatientPage() {
         <main>
             <section>
                 <h1>Create Patient</h1>
+                <p>Register a new patient in ClinicFlow.</p>
 
-                <p>
-                    Register a new patient in ClinicFlow.
-                </p>
-
-                {message && (
-                    <p role="status">
-                        {message}
-                    </p>
-                )}
-
-                {error && (
-                    <p role="alert">
-                        {error}
-                    </p>
-                )}
+                {message && <p role="status">{message}</p>}
+                {error && <p role="alert">{error}</p>}
 
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">
-                            Name
-                        </label>
+                    {/* Input → reusable component for the patient's name. */}
+                    <Input
+                        id="name"
+                        name="name"
+                        label="Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        autoComplete="name"
+                    />
 
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    {/* Input → date input for the patient's date of birth. */}
+                    <Input
+                        id="dateOfBirth"
+                        name="dateOfBirth"
+                        label="Date of Birth"
+                        type="date"
+                        value={formData.dateOfBirth}
+                        onChange={handleChange}
+                        required
+                    />
 
-                    <div>
-                        <label htmlFor="dateOfBirth">
-                            Date of Birth
-                        </label>
+                    {/* Select → reusable dropdown for the patient's gender. */}
+                    <Select
+                        id="gender"
+                        name="gender"
+                        label="Gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        required
+                        options={[
+                            { value: "", label: "Select gender" },
+                            { value: "Male", label: "Male" },
+                            { value: "Female", label: "Female" },
+                            { value: "other", label: "Other" },
+                        ]}
+                    />
 
-                        <input
-                            id="dateOfBirth"
-                            name="dateOfBirth"
-                            type="date"
-                            value={formData.dateOfBirth}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    {/* Input → validates that the phone number has 10 digits. */}
+                    <Input
+                        id="phone"
+                        name="phone"
+                        label="Phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        pattern="[0-9]{10}"
+                        placeholder="10-digit phone number"
+                        required
+                        autoComplete="tel"
+                    />
 
-                    <div>
-                        <label htmlFor="gender">
-                            Gender
-                        </label>
+                    {/* Input → email input with browser email validation. */}
+                    <Input
+                        id="email"
+                        name="email"
+                        label="Email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        autoComplete="email"
+                    />
 
-                        <select
-                            id="gender"
-                            name="gender"
-                            value={formData.gender}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">
-                                Select gender
-                            </option>
+                    {/* Textarea → allows an address to span multiple lines. */}
+                    <Textarea
+                        id="address"
+                        name="address"
+                        label="Address"
+                        value={formData.address}
+                        onChange={handleChange}
+                    />
 
-                            <option value="Male">
-                                Male
-                            </option>
+                    {/* Textarea → allows longer medical-history information. */}
+                    <Textarea
+                        id="medicalHistory"
+                        name="medicalHistory"
+                        label="Medical History"
+                        value={formData.medicalHistory}
+                        onChange={handleChange}
+                    />
 
-                            <option value="Female">
-                                Female
-                            </option>
-
-                            <option value="other">
-                                Other
-                            </option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor="phone">
-                            Phone
-                        </label>
-
-                        <input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            pattern="[0-9]{10}"
-                            placeholder="10-digit phone number"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="email">
-                            Email
-                        </label>
-
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="address">
-                            Address
-                        </label>
-
-                        <textarea
-                            id="address"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="medicalHistory">
-                            Medical History
-                        </label>
-
-                        <textarea
-                            id="medicalHistory"
-                            name="medicalHistory"
-                            value={formData.medicalHistory}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <button
+                    {/* Button → shared submit button with loading protection. */}
+                    <Button
                         type="submit"
+                        variant="primary"
                         disabled={loading}
                     >
-                        {loading
-                            ? "Creating Patient..."
-                            : "Create Patient"}
-                    </button>
+                        {loading ? "Creating Patient..." : "Create Patient"}
+                    </Button>
                 </form>
             </section>
         </main>

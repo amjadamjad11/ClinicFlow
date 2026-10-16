@@ -1,0 +1,217 @@
+
+/*
+ * global.css → shared visual foundation for ClinicFlow.
+ * Why? → All pages should follow consistent typography,
+ * spacing, form controls, buttons, tables, and responsive behavior.
+ */
+
+/* Use predictable width and height calculations across the application. */
+* {
+    box-sizing: border-box;
+}
+
+/* Default application appearance. */
+body {
+    margin: 0;
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    line-height: 1.5;
+    color: #1f2937;
+    background: #f8fafc;
+}
+
+/* Links. */
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Default buttons. */
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font: inherit;
+    cursor: pointer;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+button:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Primary button variant → standard actions such as Create and Save. */
+button.button--primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+button.button--primary:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+/* Secondary button variant → less prominent actions such as Cancel. */
+button.button--secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+button.button--secondary:hover:not(:disabled) {
+    background: #cbd5e1;
+}
+
+/* Danger button variant → destructive actions such as Delete. */
+button.button--danger {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+button.button--danger:hover:not(:disabled) {
+    background: #b91c1c;
+}
+
+/*
+ * Form controls → dark entered text on white backgrounds.
+ * This fixes the invisible text problem in patient forms.
+ */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+    color: #1f2937;
+    background-color: #ffffff;
+}
+
+/* Placeholder text → lighter than entered text, but still readable. */
+input::placeholder,
+textarea::placeholder {
+    color: #64748b;
+    opacity: 1;
+}
+
+/* Disabled fields → remain readable while indicating unavailability. */
+input:disabled,
+select:disabled,
+textarea:disabled {
+    color: #64748b;
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+}
+
+/* Focus states → clearly identify the active form field. */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 1px;
+    border-color: #2563eb;
+}
+
+/* Text areas → allow multiple lines of text. */
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Form layout → consistent vertical spacing between fields. */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Labels → clear and readable field names. */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Reusable field wrapper → keeps labels and controls grouped. */
+.form-field {
+    width: 100%;
+}
+
+/* Tables → consistent presentation of patient records. */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #1f2937;
+}
+
+/* Main page content. */
+main {
+    width: 100%;
+}
+
+/* Content container → prevents pages from becoming too wide. */
+section {
+    width: min(1100px, calc(100% - 32px));
+    margin: 32px auto;
+}
+
+/* Page headings. */
+h1 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+h2 {
+    margin-top: 24px;
+    color: #1f2937;
+}
+
+/* Section separators. */
+hr {
+    margin: 24px 0;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive layout → improve usability on smaller screens. */
+@media (max-width: 700px) {
+    section {
+        width: calc(100% - 20px);
+        margin: 20px auto;
+    }
+
+    /* Allow wide tables to scroll instead of breaking the page layout. */
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
