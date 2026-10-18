@@ -19,6 +19,10 @@ import CreateDoctorPage from "./pages/CreateDoctorPage";
 import DoctorDetailsPage from "./pages/DoctorDetailsPage";
 import DoctorSchedulePage from "./pages/DoctorSchedulePage";
 import EditDoctorPage from "./pages/EditDoctorPage";
+import AppointmentsPage from "./pages/AppointmentsPage";
+import CreateAppointmentPage from "./pages/CreateAppointmentPage";
+import AppointmentDetailsPage from "./pages/AppointmentDetailsPage";
+import EditAppointmentPage from "./pages/EditAppointmentPage";
 
 function App() {
     return (
@@ -35,6 +39,26 @@ function App() {
 
                     {/* ProtectedRoute → blocks unauthenticated users. */}
                     <Route element={<ProtectedRoute />}>
+
+                        <Route
+                            path="/appointments/:id/edit"
+                            element={<EditAppointmentPage />}
+                        />
+
+                        <Route
+                            path="/appointments/:id"
+                            element={<AppointmentDetailsPage />}
+                        />
+
+                        <Route
+                            path="/appointments/create"
+                            element={<CreateAppointmentPage />}
+                        />
+
+                        <Route
+                            path="/appointments"
+                            element={<AppointmentsPage />}
+                        />
 
                         <Route
                             path="/doctors/:id/edit"

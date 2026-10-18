@@ -32,6 +32,8 @@ function Navbar() {
 
                         <Link to="/doctors">Doctors</Link>
 
+                        <Link to="/appointments">Appointments</Link>
+
                         {/* Display the authenticated user's name and role. */}
                         <span>
                             {user.name} ({user.role})

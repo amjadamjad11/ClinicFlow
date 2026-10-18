@@ -156,6 +156,44 @@ export async function getDoctorSchedule(doctorId) {
     return apiRequest(`/api/doctors/${doctorId}/schedule`);
 }
 
+ // getAppointments → retrieves all appointments from the backend.
+ // Why? → The Appointments page needs records to display in a list.
+export async function getAppointments() {
+    return apiRequest("/api/appointments");
+}
+
+// getAppointment → retrieves one appointment using its MongoDB ID.
+// Why? → The details page needs the selected appointment's information.
+export async function getAppointment(appointmentId) {
+    return apiRequest(`/api/appointments/${appointmentId}`);
+}
+
+// createAppointment → books a new appointment.
+// Why? → Admin and Receptionist users can create appointments.
+export async function createAppointment(appointmentData) {
+    return apiRequest("/api/appointments", {
+        method: "POST",
+        body: JSON.stringify(appointmentData),
+    });
+}
+
+// updateAppointment → updates an existing appointment.
+// Why? → Admin and Receptionist users can modify appointments.
+export async function updateAppointment(appointmentId, appointmentData) {
+    return apiRequest(`/api/appointments/${appointmentId}`, {
+        method: "PUT",
+        body: JSON.stringify(appointmentData),
+    });
+}
+
+// deleteAppointment → deletes an appointment.
+// Why? → Admin and Receptionist users can delete appointments.
+export async function deleteAppointment(appointmentId) {
+    return apiRequest(`/api/appointments/${appointmentId}`, {
+        method: "DELETE",
+    });
+}
+
 // Export apiRequest for any future frontend API functions
 // that need the common request behavior directly.
 export default apiRequest;

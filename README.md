@@ -454,3 +454,89 @@ Created reusable React components in `client/src/components/`:
 - Displays an error if the request fails.
 - Relies on backend authorization to enforce Admin-only deletion.
 - Associated appointments are not automatically deleted by this UI.
+
+
+## v1.7.0 — Appointment Management UI
+
+### Appointment API Integration
+
+- Added `getAppointments()` to retrieve all appointments.
+- Added `getAppointment()` to retrieve an individual appointment.
+- Added `createAppointment()` to submit a new appointment.
+- Added `updateAppointment()` to update an existing appointment.
+- Added `deleteAppointment()` to delete an appointment.
+- Reused the shared `apiRequest()` service for authentication and response handling.
+- Appointment authorization remains enforced by the backend role-based access control middleware.
+
+### Verification
+
+- Frontend lint and production build checked after the API integration.
+
+
+## v1.7.0 — Appointment Management UI
+
+### Appointment API Integration
+
+- Added `getAppointments()` to retrieve all appointments.
+- Added `getAppointment()` to retrieve an individual appointment.
+- Added `createAppointment()` to create an appointment.
+- Added `updateAppointment()` to update an appointment.
+- Added `deleteAppointment()` to delete an appointment.
+- Reused the shared `apiRequest()` service for authentication and response handling.
+- Kept appointment permissions enforced by backend role-based access control.
+
+### Verification
+
+- `npm run lint` — passed with zero warnings and zero errors.
+- `npm run build` — production build completed successfully.
+
+
+## v1.7.0 — Appointment Management UI
+
+### Appointment API Integration
+- Added API functions to retrieve all appointments and individual appointments.
+- Added API functions to create, update, and delete appointments.
+- Reused the shared `apiRequest()` service for authentication and response handling.
+- Kept appointment permissions enforced by backend role-based access control.
+
+### Appointment Directory
+- Created the appointment listing page.
+- Displayed appointment date and time, patient, doctor, reason, and status.
+- Added loading, error, and empty-state messages.
+- Added navigation to the appointment directory for authenticated users.
+- Added a booking link for Admin and Receptionist roles.
+
+### Verification
+- `npm run lint` — passed with zero warnings and zero errors.
+- `npm run build` — production build completed successfully.
+
+## v1.7.0 — Appointment Management UI
+
+### Appointment API Integration
+- Added `getAppointments()` to retrieve all appointments.
+- Added `getAppointment()` to retrieve an individual appointment.
+- Added `createAppointment()` to create appointments.
+- Added `updateAppointment()` to update appointments.
+- Added `deleteAppointment()` to delete appointments.
+- Reused the shared `apiRequest()` service for authentication and response handling.
+
+### Appointment Directory
+- Created the appointment listing page.
+- Displayed appointment date and time, patient, doctor, reason, and status.
+- Added loading, error, and empty-state messages.
+- Added navigation to the appointment directory.
+- Added a booking link for Admin and Receptionist users.
+
+### Appointment Booking
+- Created an appointment booking form.
+- Added patient and doctor dropdowns populated from the backend.
+- Integrated a popup calendar and time selector using `react-datepicker`.
+- Added validation for future appointment dates and required fields.
+- Connected the booking form to the existing appointment API.
+- Redirected users to the appointment directory after successful booking.
+
+### Verification
+- Appointment creation tested successfully.
+- Confirmed that the newly created appointment appears in the appointment directory.
+- `npm run lint` — passed with zero warnings and zero errors.
+- `npm run build` — production build completed successfully.
