@@ -56,17 +56,21 @@ function ConsultationsPage() {
     }
 
     return (
-        <section>
-            <h1>Consultations</h1>
-            <p>View patient consultations and clinical records.</p>
+        <section className="page-container">
+            <header className="page-header">
+                <div>
+                    <h1>Consultations</h1>
+                    <p>
+                        View patient consultations and clinical records.
+                    </p>
+                </div>
 
-            {canCreateConsultation && (
-                <p>
+                {canCreateConsultation && (
                     <Link to="/consultations/create">
                         Create Consultation
                     </Link>
-                </p>
-            )}
+                )}
+            </header>
 
             {loading && <p>Loading consultations...</p>}
 
@@ -86,6 +90,7 @@ function ConsultationsPage() {
                                 <th>Doctor</th>
                                 <th>Symptoms</th>
                                 <th>Diagnosis</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -109,9 +114,21 @@ function ConsultationsPage() {
                                             ?.name || "Unknown"}
                                     </td>
 
-                                    <td>{consultation.symptoms}</td>
+                                    <td>
+                                        {consultation.symptoms || "Not recorded"}
+                                    </td>
 
-                                    <td>{consultation.diagnosis}</td>
+                                    <td>
+                                        {consultation.diagnosis || "Not recorded"}
+                                    </td>
+
+                                    <td>
+                                        <Link
+                                            to={`/consultations/${consultation._id}`}
+                                        >
+                                            View Details
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

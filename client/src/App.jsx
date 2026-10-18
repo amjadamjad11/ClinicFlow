@@ -27,6 +27,8 @@ import ConsultationsPage from "./pages/ConsultationsPage";
 import CreateConsultationPage from "./pages/CreateConsultationPage";
 import PrescriptionsPage from "./pages/PrescriptionsPage";
 import CreatePrescriptionPage from "./pages/CreatePrescriptionPage";
+import ConsultationDetailsPage from "./pages/ConsultationDetailsPage";
+import PrescriptionDetailsPage from "./pages/PrescriptionDetailsPage";
 
 function App() {
     return (
@@ -43,6 +45,16 @@ function App() {
 
                     {/* ProtectedRoute → blocks unauthenticated users. */}
                     <Route element={<ProtectedRoute />}>
+
+                        <Route
+                            path="/prescriptions/:id"
+                            element={<PrescriptionDetailsPage />}
+                        />
+
+                        <Route
+                            path="/consultations/:id"
+                            element={<ConsultationDetailsPage />}
+                        />
 
                         <Route path="/prescriptions" element={<PrescriptionsPage />} />
                         <Route

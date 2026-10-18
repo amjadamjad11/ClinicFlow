@@ -719,3 +719,45 @@ Implemented and tested the initial consultation and prescription interfaces.
 - `client/src/services/api.js`
 - `client/src/App.jsx`
 - `client/src/components/Navbar.jsx`
+
+
+
+## v1.9.0 — Consultation and Prescription Details UI
+
+Implemented dedicated details pages for consultations and prescriptions in the ClinicFlow frontend.
+
+### Consultation Details Page
+
+- Added a **View Details** link to each consultation in the Consultations directory.
+- Created `ConsultationDetailsPage.jsx` to display an individual consultation.
+- Registered the protected dynamic route `/consultations/:id`.
+- Retrieved consultation data using the existing `getConsultation()` API function.
+- Displayed appointment date, patient name and phone number, and doctor name and specialization.
+- Displayed symptoms, diagnosis, treatment, and additional notes.
+- Included loading and error handling.
+
+### Prescription Details Page
+
+- Added a **View Details** link to each prescription in the Prescriptions directory.
+- Created `PrescriptionDetailsPage.jsx` to display an individual prescription.
+- Registered the protected dynamic route `/prescriptions/:id`.
+- Retrieved prescription data using the existing `getPrescription()` API function.
+- Displayed patient, doctor, and appointment information.
+- Displayed associated consultation details, including symptoms, diagnosis, treatment, and notes.
+- Displayed all prescribed medicines, including name, dosage, frequency, duration, and instructions.
+- Displayed prescription notes.
+- Included loading and error handling.
+
+### Routing and API Integration
+
+- Updated `client/src/App.jsx` to register both details pages within the protected application routes.
+- Updated `client/src/pages/ConsultationsPage.jsx` and `client/src/pages/PrescriptionsPage.jsx` to provide navigation to individual records.
+- Reused the existing shared API service and backend endpoints.
+- No new backend endpoints were required for these details pages.
+
+### Files Updated or Added
+
+- `client/src/App.jsx`
+- `client/src/pages/ConsultationsPage.jsx`
+- `client/src/pages/PrescriptionsPage.jsx`
+- `client/src/pages/ConsultationDetails

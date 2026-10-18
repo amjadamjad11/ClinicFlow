@@ -5,103 +5,138 @@ import { getPrescriptions } from "../services/api";
 import { useAuth } from "../context/useAuth";
 
 export default function PrescriptionsPage() {
-  const { user } = useAuth();
+    const { user } = useAuth();
 
-  const [prescriptions, setPrescriptions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+    // Store prescription records returned by the backend.
+    const [prescriptions, setPrescriptions] = useState([]);
 
-  // Load saved prescriptions from the backend when the page opens.
-  useEffect(() => {
-    async function loadPrescriptions() {
-      try {
-        setLoading(true);
-        setError("");
+    // Track loading and errors while retrieving prescriptions.
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-        const response = await getPrescriptions();
-        setPrescriptions(response.data || []);
-      } catch (err) {
-        setError(err.message || "Unable to load prescriptions.");
-      } finally {
-        setLoading(false);
-      }
-    }
+    // Load saved prescriptions from the backend when the page opens.
+    useEffect(() => {
+        async function loadPrescriptions() {
+            try {
+                setLoading(true);
+                setError("");
 
-    loadPrescriptions();
-  }, []);
+                const response = await getPrescriptions();
 
-  const canCreate =
-    user?.role === "Admin" || user?.role === "Doctor";
-
-  return (
-    <main className="page-container">
-      <div className="page-header">
-        <div>
-          <h1>Prescriptions</h1>
-          <p>View prescriptions recorded for consultations.</p>
-        </div>
-
-        {canCreate && (
-          <Link to="/prescriptions/create" className="button">
-            Create Prescription
-          </Link>
-        )}
-      </div>
-
-      {loading && <p>Loading prescriptions...</p>}
-
-      {error && <p role="alert">{error}</p>}
-
-      {!loading && !error && prescriptions.length === 0 && (
-        <p>No prescriptions found.</p>
-      )}
-
-      {!loading && !error && prescriptions.length > 0 && (
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Diagnosis</th>
-                <th>Medicines</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {prescriptions.map((prescription) => {
-                const consultation = prescription.consultation;
-                const appointment = consultation?.appointment;
-
-                return (
-                  <tr key={prescription._id}>
-                    <td>
-                      {appointment?.patient?.name || "N/A"}
-                    </td>
-
-                    <td>
-                      {appointment?.doctor?.name || "N/A"}
-                    </td>
-
-                    <td>
-                      {consultation?.diagnosis || "N/A"}
-                    </td>
-
-                    <td>
-                      {prescription.medicines
-                        ?.map((medicine) => medicine.name)
-                        .join(", ") || "N/A"}
-                    </td>
-
-                    <td>{prescription.notes || "—"}</td>
-                  </tr>
+                // The backend returns the list inside response.data.
+                setPrescriptions(response.data || []);
+            } catch (requestError) {
+                setError(
+                    requestError.message ||
+                    "Unable to load prescriptions."
                 );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </main>
-  );
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadPrescriptions();
+    }, []);
+
+    // Only Admin and Doctor users can create prescriptions.
+    // The backend must also enforce these permissions.
+    const canCreate =
+        user?.role === "Admin" || user?.role === "Doctor";
+
+    return (
+        <main className="page-container">
+            <div className="page-header">
+                <div>
+                    <h1>Prescriptions</h1>
+                    <p>
+                        View prescriptions recorded for consultations.
+                    </p>
+                </div>
+
+                {canCreate && (
+                    <Link
+                        to="/prescriptions/create"
+                        className="button"
+                    >
+                        Create Prescription
+                    </Link>
+                )}
+            </div>
+
+            {loading && <p>Loading prescriptions...</p>}
+
+            {error && <p role="alert">{error}</p>}
+
+            {!loading && !error && prescriptions.length === 0 && (
+                <p>No prescriptions found.</p>
+            )}
+
+            {!loading && !error && prescriptions.length > 0 && (
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Diagnosis</th>
+                                <th>Medicines</th>
+                                <th>Notes</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {prescriptions.map((prescription) => {
+                                const consultation =
+                                    prescription.consultation;
+
+                                const appointment =
+                                    consultation?.appointment;
+
+                                return (
+                                    <tr key={prescription._id}>
+                                        <td>
+                                            {appointment?.patient?.name ||
+                                                "N/A"}
+                                        </td>
+
+                                        <td>
+                                            {appointment?.doctor?.name ||
+                                                "N/A"}
+                                        </td>
+
+                                        <td>
+                                            {consultation?.diagnosis ||
+                                                "N/A"}
+                                        </td>
+
+                                        <td>
+                                            {prescription.medicines
+                                                ?.map(
+                                                    (medicine) =>
+                                                        medicine.name
+                                                )
+                                                .join(", ") || "N/A"}
+                                        </td>
+
+                                        <td>
+                                            {prescription.notes || "—"}
+                                        </td>
+
+                                        <td>
+                                            <Link
+                                                to={`/prescriptions/${prescription._id}`}
+                                            >
+                                                View Details
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </main>
+    );
 }
