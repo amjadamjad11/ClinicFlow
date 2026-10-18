@@ -30,6 +30,8 @@ function Navbar() {
 
                         <Link to="/patients">Patients</Link>
 
+                        <Link to="/doctors">Doctors</Link>
+
                         {/* Display the authenticated user's name and role. */}
                         <span>
                             {user.name} ({user.role})

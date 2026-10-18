@@ -111,6 +111,51 @@ export async function getPatientHistory(patientId) {
     return apiRequest(`/api/patients/${patientId}/history`);
 }
 
+
+// getDoctors → retrieves all doctors from the backend.
+// Why? → The Doctors page needs the list of registered doctors.
+export async function getDoctors() {
+    return apiRequest("/api/doctors");
+}
+
+// getDoctor → retrieves one doctor using their MongoDB ID.
+// Why? → The details and edit pages need the selected doctor's data.
+export async function getDoctor(doctorId) {
+    return apiRequest(`/api/doctors/${doctorId}`);
+}
+
+// createDoctor → registers a new doctor.
+// Why? → Only Admin users can create doctors, as enforced by the backend.
+export async function createDoctor(doctorData) {
+    return apiRequest("/api/doctors", {
+        method: "POST",
+        body: JSON.stringify(doctorData),
+    });
+}
+
+// updateDoctor → updates an existing doctor's information.
+// Why? → The backend restricts doctor updates to Admin users.
+export async function updateDoctor(doctorId, doctorData) {
+    return apiRequest(`/api/doctors/${doctorId}`, {
+        method: "PUT",
+        body: JSON.stringify(doctorData),
+    });
+}
+
+// deleteDoctor → deletes a doctor.
+// Why? → The backend restricts doctor deletion to Admin users.
+export async function deleteDoctor(doctorId) {
+    return apiRequest(`/api/doctors/${doctorId}`, {
+        method: "DELETE",
+    });
+}
+
+// getDoctorSchedule → retrieves appointments for a selected doctor.
+// Why? → The schedule page needs this doctor's appointment records.
+export async function getDoctorSchedule(doctorId) {
+    return apiRequest(`/api/doctors/${doctorId}/schedule`);
+}
+
 // Export apiRequest for any future frontend API functions
 // that need the common request behavior directly.
 export default apiRequest;

@@ -347,3 +347,110 @@ Created reusable React components in `client/src/components/`:
 - `npm run lint` — passed with zero warnings and zero errors.
 - `npm run build` — production build completed successfully.
 - Browser test — patient creation and patient-list visibility verified.
+
+
+
+### Doctor API Integration
+
+- Added frontend API functions for listing and retrieving doctors.
+- Added functions for creating, updating, and deleting doctor records.
+- Added a function for retrieving a doctor's appointment schedule.
+- Reused the shared API request service for JWT authentication and response handling.
+- Existing backend role-based access control remains responsible for authorization.
+
+
+### Doctor List UI
+
+- Added a Doctors page that retrieves records through the shared API service.
+- Displayed doctor name, specialization, phone, email, and experience.
+- Added loading, error, and empty states.
+- Registered the authenticated `/doctors` route.
+- Added Doctors navigation to the application navbar.
+- Doctor details navigation will be completed in a subsequent step.
+
+
+### Doctor Registration UI
+
+- Added a doctor registration form using reusable Input and Button components.
+- Added fields for name, specialization, phone, email, license number, and experience.
+- Added phone-number pattern validation and numeric conversion for experience.
+- Added loading and API error states during submission.
+- Redirects to the Doctors directory after successful registration.
+- Added the protected `/doctors/create` route and a registration link.
+- Doctor creation remains restricted to Admin users by backend role-based access control.
+
+
+### Doctor Details UI
+
+- Added a doctor details page using the existing `getDoctor()` API function.
+- Displayed professional details, including specialization, contact information, license number, and experience.
+- Added loading and error states.
+- Registered the protected `/doctors/:id` route.
+- Displayed the Edit Doctor option only to Admin users.
+- Added navigation to the planned doctor schedule page.
+
+
+### Doctor Editing UI
+
+- Added an Edit Doctor page to update existing doctor records.
+- Loads the current doctor's information through the `getDoctor()` API function.
+- Uses controlled form inputs to keep displayed values synchronized with React state.
+- Saves changes through the `updateDoctor()` API function.
+- Validates the 10-digit phone number and non-negative numeric experience before submitting.
+- Converts experience to a number before sending the update to the backend.
+- Displays loading and API error states and returns to the doctor's details page after a successful update.
+- Backend Admin-only authorization remains responsible for enforcing update permissions.
+
+
+### Doctor Deletion UI
+
+- Added an Admin-only Delete Doctor action to the doctor details page.
+- Displays a browser confirmation prompt before deletion.
+- Disables the delete button and displays a progress label while the request runs.
+- Uses the `deleteDoctor()` API function to call the backend.
+- Navigates back to the doctors list after successful deletion.
+- Displays an error if the delete request fails.
+- Backend authorization remains responsible for enforcing Admin-only deletion.
+- Note: associated appointment records are not automatically deleted by this UI.
+
+
+### Doctor Details UI
+
+- Added a doctor details page using the `getDoctor()` API function.
+- Displays professional details, including specialization, contact information, license number, and experience.
+- Includes loading and error states.
+- Registered the protected `/doctors/:id` route.
+- Displays Edit Doctor and Delete Doctor actions only to Admin users.
+- Provides navigation to the doctor's appointment schedule and the Doctors directory.
+- Requires backend authorization to enforce permissions.
+
+### Doctor Appointment Schedule UI
+
+- Added a page to display a doctor's appointment schedule through `getDoctorSchedule()`.
+- Displays appointment dates, patient information, reason, and status.
+- Includes loading, error, and empty states.
+- Registered the `/doctors/:id/schedule` route.
+- Uses the backend to retrieve appointments associated with the selected doctor.
+
+### Doctor Editing UI
+
+- Added an Edit Doctor page to update existing doctor records.
+- Loads existing information through `getDoctor()`.
+- Uses controlled form inputs to keep displayed values synchronized with React state.
+- Saves changes through `updateDoctor()`.
+- Validates the 10-digit phone number and non-negative experience value.
+- Converts experience to a number before submitting the update.
+- Displays loading and API error states.
+- Returns to the doctor's details page after a successful update.
+- Relies on backend Admin-only authorization to enforce update permissions.
+
+### Doctor Deletion UI
+
+- Added an Admin-only Delete Doctor action to the doctor details page.
+- Requests confirmation before deleting a doctor.
+- Disables the delete button and displays progress while the request runs.
+- Uses `deleteDoctor()` to send the deletion request.
+- Redirects to the Doctors directory after successful deletion.
+- Displays an error if the request fails.
+- Relies on backend authorization to enforce Admin-only deletion.
+- Associated appointments are not automatically deleted by this UI.

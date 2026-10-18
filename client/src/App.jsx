@@ -14,6 +14,11 @@ import PatientsPage from "./pages/PatientsPage";
 import CreatePatientPage from "./pages/CreatePatientPage";
 import PatientDetailsPage from "./pages/PatientDetailsPage";
 import EditPatientPage from "./pages/EditPatientPage";
+import DoctorsPage from "./pages/DoctorsPage";
+import CreateDoctorPage from "./pages/CreateDoctorPage";
+import DoctorDetailsPage from "./pages/DoctorDetailsPage";
+import DoctorSchedulePage from "./pages/DoctorSchedulePage";
+import EditDoctorPage from "./pages/EditDoctorPage";
 
 function App() {
     return (
@@ -30,6 +35,31 @@ function App() {
 
                     {/* ProtectedRoute → blocks unauthenticated users. */}
                     <Route element={<ProtectedRoute />}>
+
+                        <Route
+                            path="/doctors/:id/edit"
+                            element={<EditDoctorPage />}
+                        />
+
+                        <Route
+                            path="/doctors/:id/schedule"
+                            element={<DoctorSchedulePage />}
+                        />
+
+                        <Route
+                            path="/doctors/:id"
+                            element={<DoctorDetailsPage />}
+                        />
+
+                        <Route
+                            path="/doctors/create"
+                            element={<CreateDoctorPage />}
+                        />
+
+                        <Route
+                            path="/doctors"
+                            element={<DoctorsPage />}
+                        />
 
                         {/* /dashboard → accessible only after authentication. */}
                         <Route
