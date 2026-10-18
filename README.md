@@ -540,3 +540,182 @@ Created reusable React components in `client/src/components/`:
 - Confirmed that the newly created appointment appears in the appointment directory.
 - `npm run lint` — passed with zero warnings and zero errors.
 - `npm run build` — production build completed successfully.
+
+## v1.7.0 — Appointment Management UI
+
+### Appointment API Integration
+- Added `getAppointments()` to retrieve appointment records.
+- Added `getAppointment()` to retrieve an individual appointment.
+- Added `createAppointment()` to create appointments.
+- Added `updateAppointment()` to update existing appointments.
+- Added `deleteAppointment()` to delete appointments.
+- Reused the shared API request service for authentication and response handling.
+
+### Appointment Directory
+- Created an appointment listing page.
+- Displayed appointment date and time, patient, doctor, reason, and status.
+- Added loading, error, and empty states.
+- Added navigation to appointment details.
+- Provided appointment booking access for Admin and Receptionist users.
+
+### Appointment Booking
+- Created an appointment booking form.
+- Populated patient and doctor dropdowns from backend data.
+- Integrated a popup calendar and time selector using `react-datepicker`.
+- Added required-field validation and future-date/time restrictions.
+- Connected the booking form to the appointment API.
+- Redirected users after successful booking.
+
+### Appointment Details
+- Created an appointment details page.
+- Displayed appointment information and associated patient and doctor details.
+- Added an Edit Appointment link for authorized users.
+- Added a confirmation prompt before permanent deletion.
+- Redirected users to the appointment directory after successful deletion.
+
+### Edit Appointment
+- Created a dedicated appointment editing page.
+- Loaded the existing appointment and available patient and doctor records.
+- Allowed authorized users to update the patient, doctor, date, time, reason, and status.
+- Added loading, saving, and error states.
+- Redirected users to appointment details after successful updates.
+
+### Verification
+- Appointment creation tested successfully.
+- Confirmed that newly created appointments appear in the directory.
+- Appointment editing tested successfully.
+- Appointment deletion tested successfully, including removal from the directory.
+- `npm run lint` — passed with zero warnings and zero errors.
+- `npm run build` — production build completed successfully.
+
+
+### Consultation and Prescription API Integration
+
+- Added reusable frontend API functions for consultation CRUD operations.
+- Added reusable frontend API functions for prescription CRUD operations.
+- Reused the shared `apiRequest()` function for authentication headers, JSON requests, and API error handling.
+- Connected the API service to the existing `/api/consultations` and `/api/prescriptions` backend endpoints.
+
+**Verification:** `npm run build` completed successfully.
+
+
+
+## Consultation Management UI
+
+Implemented the initial consultation management interface in the ClinicFlow frontend.
+
+### Features
+- View consultation records, including appointment date, patient, doctor, symptoms, and diagnosis.
+- Open a form to create a consultation for an existing appointment.
+- Record symptoms, diagnosis, treatment, and additional notes.
+- Exclude appointments that already have a consultation from the selection list.
+- Display loading and error messages when retrieving or saving data.
+- Restrict consultation creation links to Admin and Doctor roles in the UI.
+- Register protected consultation routes and add consultation navigation.
+
+### Frontend Files
+- `client/src/pages/ConsultationsPage.jsx`
+- `client/src/pages/CreateConsultationPage.jsx`
+- `client/src/App.jsx`
+- `client/src/components/Navbar.jsx`
+
+### Verification
+- `npm run build` completed successfully.
+- Vite transformed 370 modules without build errors.
+
+### Pending Testing
+- Verify consultation retrieval against the running backend.
+- Verify consultation creation with a test appointment.
+- Verify duplicate consultation prevention and role permissions.
+
+## Consultation Management UI
+
+Implemented and tested the consultation management interface in the ClinicFlow frontend.
+
+### Features
+- View consultation records with appointment date, patient, doctor, symptoms, and diagnosis.
+- Create a consultation for an existing appointment.
+- Record symptoms, diagnosis, treatment, and additional notes.
+- Exclude appointments that already have a consultation from the appointment selection list.
+- Display loading and error messages while retrieving or saving data.
+- Restrict consultation creation options in the UI to Admin and Doctor roles.
+- Add protected consultation routes and consultation navigation.
+
+### Frontend Files
+- `client/src/pages/ConsultationsPage.jsx`
+- `client/src/pages/CreateConsultationPage.jsx`
+- `client/src/App.jsx`
+- `client/src/components/Navbar.jsx`
+- `client/src/services/api.js`
+
+### Verification
+- `npm run build` completed successfully.
+- The Consultations page loaded successfully in the browser.
+- A test consultation was created successfully.
+- The saved consultation appeared in the consultation list.
+
+### Remaining Tests
+- Verify that duplicate consultations are prevented.
+- Verify role-based access for consultation actions.
+- Implement and test the prescription management UI.
+
+## Prescription Management UI
+
+Implemented the prescription management interface in the ClinicFlow frontend.
+
+### Features
+- View prescriptions with patient, doctor, diagnosis, medicines, and notes.
+- Create a prescription linked to an existing consultation.
+- Add multiple medicines to one prescription.
+- Record medicine name, dosage, frequency, duration, and optional instructions.
+- Add optional prescription notes.
+- Exclude consultations that already have a prescription from the selection list.
+- Display loading, validation, and API error messages.
+- Register protected prescription routes and add prescription navigation.
+
+### Frontend Files
+- `client/src/pages/PrescriptionsPage.jsx`
+- `client/src/pages/CreatePrescriptionPage.jsx`
+- `client/src/App.jsx`
+- `client/src/components/Navbar.jsx`
+- `client/src/services/api.js`
+
+### Verification
+- Record the result of `npm run build`.
+- Record the result of prescription listing and creation tests.
+- Verify multiple medicines can be saved in one prescription.
+- Verify a consultation with an existing prescription cannot be selected again.
+
+
+## Consultation and Prescription Management UI
+
+Implemented and tested the initial consultation and prescription interfaces.
+
+### Consultation Management
+- View consultation records with appointment, patient, doctor, symptoms, and diagnosis.
+- Create consultations using existing appointments.
+- Prevent selection of appointments that already have consultations.
+- Display loading and error messages.
+
+### Prescription Management
+- Select a consultation that does not already have a prescription.
+- Add multiple medicines to a prescription.
+- Record medicine name, dosage, frequency, duration, and optional instructions.
+- Add optional prescription notes.
+- Validate required fields before submission.
+- Save prescriptions through the backend API.
+- Display saved prescriptions in the prescription list.
+
+### Technical Fix
+- Corrected consultation selection so the frontend sends the consultation ID rather than a React event object.
+- Verified that prescription creation succeeds and the saved record appears in the list.
+- Confirmed that `npm run build` completes successfully.
+
+### Files
+- `client/src/pages/ConsultationsPage.jsx`
+- `client/src/pages/CreateConsultationPage.jsx`
+- `client/src/pages/PrescriptionsPage.jsx`
+- `client/src/pages/CreatePrescriptionPage.jsx`
+- `client/src/services/api.js`
+- `client/src/App.jsx`
+- `client/src/components/Navbar.jsx`

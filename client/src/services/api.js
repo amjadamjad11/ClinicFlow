@@ -194,6 +194,93 @@ export async function deleteAppointment(appointmentId) {
     });
 }
 
+/*
+ * CONSULTATION API FUNCTIONS
+ *
+ * A consultation stores the symptoms, diagnosis, treatment,
+ * and notes recorded by a doctor for an appointment.
+ */
+
+// Retrieve all consultations from the backend.
+export async function getConsultations() {
+    return apiRequest("/api/consultations");
+}
+
+// Retrieve one consultation using its MongoDB ID.
+export async function getConsultation(consultationId) {
+    return apiRequest(`/api/consultations/${consultationId}`);
+}
+
+// Create a consultation for an existing appointment.
+export async function createConsultation(consultationData) {
+    return apiRequest("/api/consultations", {
+        method: "POST",
+        body: JSON.stringify(consultationData),
+    });
+}
+
+// Update an existing consultation.
+export async function updateConsultation(
+    consultationId,
+    consultationData
+) {
+    return apiRequest(`/api/consultations/${consultationId}`, {
+        method: "PUT",
+        body: JSON.stringify(consultationData),
+    });
+}
+
+// Delete a consultation. The backend restricts this to Admin users.
+export async function deleteConsultation(consultationId) {
+    return apiRequest(`/api/consultations/${consultationId}`, {
+        method: "DELETE",
+    });
+}
+
+/*
+ * PRESCRIPTION API FUNCTIONS
+ *
+ * A prescription belongs to a consultation and contains
+ * one or more medicines.
+ */
+
+// Retrieve all prescriptions from the backend.
+export async function getPrescriptions() {
+    return apiRequest("/api/prescriptions");
+}
+
+// Retrieve one prescription using its MongoDB ID.
+export async function getPrescription(prescriptionId) {
+    return apiRequest(`/api/prescriptions/${prescriptionId}`);
+}
+
+// Create a prescription for an existing consultation.
+// Send a new prescription to the backend API.
+export function createPrescription(prescriptionData) {
+    return apiRequest("/api/prescriptions", {
+        method: "POST",
+        body: JSON.stringify(prescriptionData),
+    });
+}
+
+// Update an existing prescription.
+export async function updatePrescription(
+    prescriptionId,
+    prescriptionData
+) {
+    return apiRequest(`/api/prescriptions/${prescriptionId}`, {
+        method: "PUT",
+        body: JSON.stringify(prescriptionData),
+    });
+}
+
+// Delete a prescription. The backend restricts this to Admin users.
+export async function deletePrescription(prescriptionId) {
+    return apiRequest(`/api/prescriptions/${prescriptionId}`, {
+        method: "DELETE",
+    });
+}
+
 // Export apiRequest for any future frontend API functions
 // that need the common request behavior directly.
 export default apiRequest;

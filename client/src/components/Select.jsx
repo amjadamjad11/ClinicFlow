@@ -1,6 +1,6 @@
 
- // Select → reusable labelled dropdown for ClinicFlow.
- // Why? → Forms can share consistent dropdown behavior and styling.
+ // Select → reusable dropdown component.
+ // Why? → Forms need to return the selected value to their parent.
 
 function Select({
     id,
@@ -8,7 +8,7 @@ function Select({
     name,
     value,
     onChange,
-    options,
+    options = [],
     required = false,
     disabled = false,
 }) {
@@ -20,12 +20,20 @@ function Select({
                 id={id}
                 name={name}
                 value={value}
-                onChange={onChange}
+                onChange={(event) => {
+                    // Send only the selected string value to the parent.
+                    onChange(event.target.value);
+                }}
                 required={required}
                 disabled={disabled}
             >
+                <option value="">Select an option</option>
+
                 {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option
+                        key={option.value}
+                        value={option.value}
+                    >
                         {option.label}
                     </option>
                 ))}
