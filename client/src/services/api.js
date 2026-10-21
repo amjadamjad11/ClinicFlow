@@ -322,4 +322,7 @@ export async function updateBilling(billingId, billingData) {
 export async function getDashboardSummary() {
     return apiRequest("/api/dashboard/summary");
 }
+export async function getCurrentUser() {
+    return apiRequest("/api/auth/me");
+}
 export default apiRequest;

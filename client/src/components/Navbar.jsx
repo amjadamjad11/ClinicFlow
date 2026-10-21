@@ -25,8 +25,9 @@ function Navbar() {
                     <Link to="/login">Login</Link>
                 ) : (
                     <>
-                        {/* Dashboard → private page available after authentication. */}
                         <Link to="/dashboard">Dashboard</Link>
+
+                        <Link to="/profile">Profile</Link>
 
                         <Link to="/patients">Patients</Link>
 

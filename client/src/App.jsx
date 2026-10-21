@@ -31,6 +31,7 @@ import ConsultationDetailsPage from "./pages/ConsultationDetailsPage";
 import PrescriptionDetailsPage from "./pages/PrescriptionDetailsPage";
 import BillingPage from "./pages/BillingPage";
 import BillingDetailsPage from "./pages/BillingDetailsPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
     return (
@@ -47,6 +48,8 @@ function App() {
 
                     {/* ProtectedRoute → blocks unauthenticated users. */}
                     <Route element={<ProtectedRoute />}>
+
+                        <Route path="/profile" element={<ProfilePage />} />
 
                         <Route
                             path="/billing/:id"

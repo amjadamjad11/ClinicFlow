@@ -829,3 +829,62 @@ ClinicFlow includes an authenticated dashboard that provides a consolidated over
 - Frontend production build completed successfully using `npm run build`.
 - Dashboard loaded successfully in the browser.
 - Dashboard statistics, appointment summaries, billing information, and doctor activity were verified in the running application.
+
+
+## User Profile API
+
+### `GET /api/auth/me`
+
+Returns the profile of the currently authenticated user.
+
+**Authentication:** Required. Send a valid JWT using the `Authorization: Bearer <token>` header.
+
+**Success response:** `200 OK`
+
+Returns the user's ID, name, email, role, and account timestamps. Password information is excluded from the response.
+
+**Error responses:**
+- `401 Unauthorized` — the JWT is missing, invalid, or expired.
+- `404 Not Found` — the account associated with the JWT no longer exists.
+
+**Implementation files:**
+- `server/controllers/authController.js` — retrieves the current user's profile.
+- `server/routes/authRoutes.js` — defines the protected profile route.
+- `server/middleware/authMiddleware.js` — verifies the JWT.
+- `server/middleware/asyncHandler.js` — forwards asynchronous errors to the error-handling middleware.
+
+**Verification:** Successfully logged in with a test account and retrieved the profile through the protected endpoint.
+## User Profile UI
+
+The User Profile page allows authenticated users to view their account information through the ClinicFlow frontend.
+
+### Features
+
+- Displays the user's name, email address, and account role.
+- Shows account creation and last-updated timestamps.
+- Retrieves the latest account information through `GET /api/auth/me`.
+- Displays loading and error states while retrieving profile data.
+- Provides navigation back to the Dashboard.
+- Restricts access through the existing protected routing system.
+- Uses responsive styling for desktop and mobile screens.
+- Does not display password information.
+
+### Implementation Files
+
+- `client/src/pages/ProfilePage.jsx` — profile page component and API request handling.
+- `client/src/pages/ProfilePage.css` — responsive profile styling.
+- `client/src/services/api.js` — `getCurrentUser()` API function.
+- `client/src/App.jsx` — protected `/profile` route.
+- `client/src/components/Navbar.jsx` — Profile navigation link.
+
+### Verification
+
+- Frontend production build completed successfully.
+- Profile page opened successfully after login.
+- Profile information was displayed.
+- Navigation back to the Dashboard worked.
+- Direct profile access after logout was blocked by protected routing.
+
+### Limitations
+
+The current profile page is read-only. Editing account details and changing passwords are not included in this implementation.

@@ -124,7 +124,44 @@ const loginUser = async (req,res) => {
     }
 }
 
+
+/**
+ * GET CURRENT USER PROFILE
+ *
+ * Uses the verified JWT to identify the logged-in user.
+ * Fetches the latest account information from MongoDB.
+ * Never returns the password or its hash.
+ */
+const getCurrentUser = async (req, res) => {
+    // req.user.id comes from the JWT verified by authMiddleware.
+    const user = await User.findById(req.user.id).select(
+        "-password"
+    );
+
+    // The account may have been deleted after the token was issued.
+    if (!user) {
+        return res.status(404).json({
+            status: "error",
+            message: "User account not found",
+        });
+    }
+
+    return res.status(200).json({
+        status: "success",
+        data: {
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            },
+        },
+    });
+};
 module.exports = {
     registerUser,
     loginUser,
+    getCurrentUser,
 };
