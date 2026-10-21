@@ -6,7 +6,6 @@ import {
     getAppointments,
     getConsultations,
 } from "../services/api";
-import Input from "../components/Input";
 import Select from "../components/Select";
 import Textarea from "../components/Textarea";
 import Button from "../components/Button";

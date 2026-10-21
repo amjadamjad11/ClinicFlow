@@ -1,8 +1,3 @@
-
- // CreatePatientPage → form for registering a new ClinicFlow patient.
- // Why? → Admin and Receptionist users need a frontend
- // interface for creating patient records.
-
 import { useState } from "react";
 import { createPatient } from "../services/api";
 import Button from "../components/Button";
@@ -11,7 +6,7 @@ import Select from "../components/Select";
 import Textarea from "../components/Textarea";
 
 function CreatePatientPage() {
-    // formData → stores all values entered by the user.
+    // Stores all values entered by the user.
     const [formData, setFormData] = useState({
         name: "",
         dateOfBirth: "",
@@ -26,7 +21,7 @@ function CreatePatientPage() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // handleChange → updates the field identified by its name.
+    // Updates text, date, email, and textarea fields using their events.
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -36,7 +31,15 @@ function CreatePatientPage() {
         }));
     };
 
-    // handleSubmit → sends the completed form to the backend API.
+    // Select.jsx passes the selected gender as a string, not an event.
+    const handleGenderChange = (selectedGender) => {
+        setFormData((currentData) => ({
+            ...currentData,
+            gender: selectedGender,
+        }));
+    };
+
+    // Sends the completed patient form to the backend API.
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -45,7 +48,6 @@ function CreatePatientPage() {
         setLoading(true);
 
         try {
-            // createPatient → sends the patient data to the backend.
             await createPatient(formData);
 
             setMessage("Patient created successfully.");
@@ -61,7 +63,9 @@ function CreatePatientPage() {
                 medicalHistory: "",
             });
         } catch (requestError) {
-            setError(requestError.message);
+            setError(
+                requestError.message || "Failed to create patient."
+            );
         } finally {
             setLoading(false);
         }
@@ -77,7 +81,6 @@ function CreatePatientPage() {
                 {error && <p role="alert">{error}</p>}
 
                 <form onSubmit={handleSubmit}>
-                    {/* Input → reusable component for the patient's name. */}
                     <Input
                         id="name"
                         name="name"
@@ -88,7 +91,6 @@ function CreatePatientPage() {
                         autoComplete="name"
                     />
 
-                    {/* Input → date input for the patient's date of birth. */}
                     <Input
                         id="dateOfBirth"
                         name="dateOfBirth"
@@ -99,23 +101,21 @@ function CreatePatientPage() {
                         required
                     />
 
-                    {/* Select → reusable dropdown for the patient's gender. */}
+                    {/* The dropdown passes its selected string to this handler. */}
                     <Select
                         id="gender"
                         name="gender"
                         label="Gender"
                         value={formData.gender}
-                        onChange={handleChange}
+                        onChange={handleGenderChange}
                         required
                         options={[
-                            { value: "", label: "Select gender" },
                             { value: "Male", label: "Male" },
                             { value: "Female", label: "Female" },
-                            { value: "other", label: "Other" },
+                            { value: "Other", label: "Other" },
                         ]}
                     />
 
-                    {/* Input → validates that the phone number has 10 digits. */}
                     <Input
                         id="phone"
                         name="phone"
@@ -129,7 +129,6 @@ function CreatePatientPage() {
                         autoComplete="tel"
                     />
 
-                    {/* Input → email input with browser email validation. */}
                     <Input
                         id="email"
                         name="email"
@@ -140,7 +139,6 @@ function CreatePatientPage() {
                         autoComplete="email"
                     />
 
-                    {/* Textarea → allows an address to span multiple lines. */}
                     <Textarea
                         id="address"
                         name="address"
@@ -149,7 +147,6 @@ function CreatePatientPage() {
                         onChange={handleChange}
                     />
 
-                    {/* Textarea → allows longer medical-history information. */}
                     <Textarea
                         id="medicalHistory"
                         name="medicalHistory"
@@ -158,7 +155,6 @@ function CreatePatientPage() {
                         onChange={handleChange}
                     />
 
-                    {/* Button → shared submit button with loading protection. */}
                     <Button
                         type="submit"
                         variant="primary"

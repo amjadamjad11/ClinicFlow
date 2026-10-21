@@ -8,6 +8,15 @@ import "./DashboardPage.css";
 function DashboardPage() {
     const { user } = useAuth();
 
+    // Calculate today's date once when the dashboard component initializes.
+    const [todayDate] = useState(() =>
+        new Date().toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        })
+    );
+
     // Stores the dashboard data returned by the backend.
     const [dashboard, setDashboard] = useState(null);
 
@@ -182,13 +191,7 @@ function DashboardPage() {
 
                 <div className="dashboard-date">
                     <span>Today</span>
-                    <strong>
-                        {new Date().toLocaleDateString("en-IN", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                        })}
-                    </strong>
+                    <strong>{todayDate}</strong>
                 </div>
             </header>
 

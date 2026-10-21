@@ -154,7 +154,7 @@ ClinicFlow follows a modular full-stack architecture.
 
 ## Frontend Development
 
-### v1.1.0 — Frontend Foundation
+### v1.1.0 â€” Frontend Foundation
 
 The ClinicFlow frontend has been initialized using React and Vite.
 
@@ -170,12 +170,12 @@ The ClinicFlow frontend has been initialized using React and Vite.
 The React frontend runs independently from the backend:
 
 ```text
-Frontend → http://localhost:5173
-Backend  → http://localhost:5000
+Frontend â†’ http://localhost:5173
+Backend  â†’ http://localhost:5000
 
 
 
-### v1.3.0 — Frontend Authentication
+### v1.3.0 â€” Frontend Authentication
 
 ClinicFlow frontend authentication has been connected to the existing backend authentication API.
 
@@ -185,16 +185,16 @@ The frontend now uses React Context to maintain authentication state across the 
 
 ```text
 LoginPage
-    ↓
+    â†“
 Authentication API
-    ↓
+    â†“
 JWT + User Information
-    ↓
+    â†“
 AuthContext
-    ↓
+    â†“
 Application Components
 
-### v1.3.0 — Frontend Authentication
+### v1.3.0 â€” Frontend Authentication
 
 ClinicFlow frontend authentication has been connected to the existing backend authentication API.
 
@@ -204,17 +204,17 @@ The frontend uses React Context to maintain authentication state across the appl
 
 ```text
 LoginPage
-    ↓
+    â†“
 Authentication API
-    ↓
+    â†“
 JWT + User Information
-    ↓
+    â†“
 AuthContext
-    ↓
+    â†“
 ProtectedRoute / Application Components
 
 
-## v1.4.0 — Frontend Patient Management
+## v1.4.0 â€” Frontend Patient Management
 
 ### Patient Management Features
 
@@ -246,13 +246,13 @@ The frontend now provides the initial patient-management workflow.
 
 ```text
 Patient List
-    ↓
+    â†“
 Create Patient
-    ↓
+    â†“
 POST /api/patients
-    ↓
+    â†“
 MongoDB
-    ↓
+    â†“
 Patient List
 
 #### Edit Patient
@@ -280,26 +280,26 @@ ClinicFlow now supports the complete initial frontend CRUD workflow:
 
 ```text
 Create
-  ↓
+  â†“
 POST /api/patients
-  ↓
+  â†“
 MongoDB
 
 Read
-  ↓
+  â†“
 GET /api/patients
 GET /api/patients/:id
 
 Update
-  ↓
+  â†“
 PUT /api/patients/:id
-  ↓
+  â†“
 MongoDB
 
 Delete
-  ↓
+  â†“
 DELETE /api/patients/:id
-  ↓
+  â†“
 MongoDB
 
 
@@ -314,7 +314,7 @@ MongoDB
 
 
 
-## v1.5.0 — Frontend UI Foundation
+## v1.5.0 â€” Frontend UI Foundation
 
 ### Global Styling
 
@@ -328,10 +328,10 @@ MongoDB
 
 Created reusable React components in `client/src/components/`:
 
-- `Button.jsx` — configurable button with primary, secondary, and danger variants.
-- `Input.jsx` — reusable labelled input supporting input types, required fields, patterns, and autocomplete.
-- `Select.jsx` — reusable labelled dropdown with configurable options.
-- `Textarea.jsx` — reusable labelled multiline text field.
+- `Button.jsx` â€” configurable button with primary, secondary, and danger variants.
+- `Input.jsx` â€” reusable labelled input supporting input types, required fields, patterns, and autocomplete.
+- `Select.jsx` â€” reusable labelled dropdown with configurable options.
+- `Textarea.jsx` â€” reusable labelled multiline text field.
 
 ### Patient Form Integration
 
@@ -344,9 +344,9 @@ Created reusable React components in `client/src/components/`:
 
 ### Verification
 
-- `npm run lint` — passed with zero warnings and zero errors.
-- `npm run build` — production build completed successfully.
-- Browser test — patient creation and patient-list visibility verified.
+- `npm run lint` â€” passed with zero warnings and zero errors.
+- `npm run build` â€” production build completed successfully.
+- Browser test â€” patient creation and patient-list visibility verified.
 
 
 
@@ -456,7 +456,7 @@ Created reusable React components in `client/src/components/`:
 - Associated appointments are not automatically deleted by this UI.
 
 
-## v1.7.0 — Appointment Management UI
+## v1.7.0 â€” Appointment Management UI
 
 ### Appointment API Integration
 
@@ -473,7 +473,7 @@ Created reusable React components in `client/src/components/`:
 - Frontend lint and production build checked after the API integration.
 
 
-## v1.7.0 — Appointment Management UI
+## v1.7.0 â€” Appointment Management UI
 
 ### Appointment API Integration
 
@@ -487,11 +487,11 @@ Created reusable React components in `client/src/components/`:
 
 ### Verification
 
-- `npm run lint` — passed with zero warnings and zero errors.
-- `npm run build` — production build completed successfully.
+- `npm run lint` â€” passed with zero warnings and zero errors.
+- `npm run build` â€” production build completed successfully.
 
 
-## v1.7.0 — Appointment Management UI
+## v1.7.0 â€” Appointment Management UI
 
 ### Appointment API Integration
 - Added API functions to retrieve all appointments and individual appointments.
@@ -507,10 +507,10 @@ Created reusable React components in `client/src/components/`:
 - Added a booking link for Admin and Receptionist roles.
 
 ### Verification
-- `npm run lint` — passed with zero warnings and zero errors.
-- `npm run build` — production build completed successfully.
+- `npm run lint` â€” passed with zero warnings and zero errors.
+- `npm run build` â€” production build completed successfully.
 
-## v1.7.0 — Appointment Management UI
+## v1.7.0 â€” Appointment Management UI
 
 ### Appointment API Integration
 - Added `getAppointments()` to retrieve all appointments.
@@ -538,10 +538,10 @@ Created reusable React components in `client/src/components/`:
 ### Verification
 - Appointment creation tested successfully.
 - Confirmed that the newly created appointment appears in the appointment directory.
-- `npm run lint` — passed with zero warnings and zero errors.
-- `npm run build` — production build completed successfully.
+- `npm run lint` â€” passed with zero warnings and zero errors.
+- `npm run build` â€” production build completed successfully.
 
-## v1.7.0 — Appointment Management UI
+## v1.7.0 â€” Appointment Management UI
 
 ### Appointment API Integration
 - Added `getAppointments()` to retrieve appointment records.
@@ -585,8 +585,8 @@ Created reusable React components in `client/src/components/`:
 - Confirmed that newly created appointments appear in the directory.
 - Appointment editing tested successfully.
 - Appointment deletion tested successfully, including removal from the directory.
-- `npm run lint` — passed with zero warnings and zero errors.
-- `npm run build` — production build completed successfully.
+- `npm run lint` â€” passed with zero warnings and zero errors.
+- `npm run build` â€” production build completed successfully.
 
 
 ### Consultation and Prescription API Integration
@@ -722,7 +722,7 @@ Implemented and tested the initial consultation and prescription interfaces.
 
 
 
-## v1.9.0 — Consultation and Prescription Details UI
+## v1.9.0 â€” Consultation and Prescription Details UI
 
 Implemented dedicated details pages for consultations and prescriptions in the ClinicFlow frontend.
 
@@ -779,11 +779,11 @@ Implemented the Billing Management interface and connected it to the existing bi
 - Reuse shared form components and the existing authenticated API service.
 
 **Frontend files**
-- `client/src/pages/BillingPage.jsx` — billing list and bill creation form.
-- `client/src/pages/BillingDetailsPage.jsx` — individual bill details.
-- `client/src/services/api.js` — billing API functions.
-- `client/src/App.jsx` — protected billing routes.
-- `client/src/components/Navbar.jsx` — Billing navigation link.
+- `client/src/pages/BillingPage.jsx` â€” billing list and bill creation form.
+- `client/src/pages/BillingDetailsPage.jsx` â€” individual bill details.
+- `client/src/services/api.js` â€” billing API functions.
+- `client/src/App.jsx` â€” protected billing routes.
+- `client/src/components/Navbar.jsx` â€” Billing navigation link.
 
 **Testing**
 - Production build completed successfully with Vite.
@@ -820,9 +820,9 @@ ClinicFlow includes an authenticated dashboard that provides a consolidated over
 
 ### Dashboard Files
 
-- `client/src/pages/DashboardPage.jsx` — Dashboard interface, API loading, statistics, and appointment summaries.
-- `client/src/pages/DashboardPage.css` — Dashboard layout, cards, status indicators, and responsive styling.
-- `client/src/services/api.js` — Shared API service, including `getDashboardSummary()`.
+- `client/src/pages/DashboardPage.jsx` â€” Dashboard interface, API loading, statistics, and appointment summaries.
+- `client/src/pages/DashboardPage.css` â€” Dashboard layout, cards, status indicators, and responsive styling.
+- `client/src/services/api.js` â€” Shared API service, including `getDashboardSummary()`.
 
 ### Verification
 
@@ -844,14 +844,14 @@ Returns the profile of the currently authenticated user.
 Returns the user's ID, name, email, role, and account timestamps. Password information is excluded from the response.
 
 **Error responses:**
-- `401 Unauthorized` — the JWT is missing, invalid, or expired.
-- `404 Not Found` — the account associated with the JWT no longer exists.
+- `401 Unauthorized` â€” the JWT is missing, invalid, or expired.
+- `404 Not Found` â€” the account associated with the JWT no longer exists.
 
 **Implementation files:**
-- `server/controllers/authController.js` — retrieves the current user's profile.
-- `server/routes/authRoutes.js` — defines the protected profile route.
-- `server/middleware/authMiddleware.js` — verifies the JWT.
-- `server/middleware/asyncHandler.js` — forwards asynchronous errors to the error-handling middleware.
+- `server/controllers/authController.js` â€” retrieves the current user's profile.
+- `server/routes/authRoutes.js` â€” defines the protected profile route.
+- `server/middleware/authMiddleware.js` â€” verifies the JWT.
+- `server/middleware/asyncHandler.js` â€” forwards asynchronous errors to the error-handling middleware.
 
 **Verification:** Successfully logged in with a test account and retrieved the profile through the protected endpoint.
 ## User Profile UI
@@ -871,11 +871,11 @@ The User Profile page allows authenticated users to view their account informati
 
 ### Implementation Files
 
-- `client/src/pages/ProfilePage.jsx` — profile page component and API request handling.
-- `client/src/pages/ProfilePage.css` — responsive profile styling.
-- `client/src/services/api.js` — `getCurrentUser()` API function.
-- `client/src/App.jsx` — protected `/profile` route.
-- `client/src/components/Navbar.jsx` — Profile navigation link.
+- `client/src/pages/ProfilePage.jsx` â€” profile page component and API request handling.
+- `client/src/pages/ProfilePage.css` â€” responsive profile styling.
+- `client/src/services/api.js` â€” `getCurrentUser()` API function.
+- `client/src/App.jsx` â€” protected `/profile` route.
+- `client/src/components/Navbar.jsx` â€” Profile navigation link.
 
 ### Verification
 
@@ -887,4 +887,60 @@ The User Profile page allows authenticated users to view their account informati
 
 ### Limitations
 
-The current profile page is read-only. Editing account details and changing passwords are not included in this implementation.
+## Testing, Security & Performance
+
+### Automated tests
+Run the backend automated tests from the project root:
+
+```powershell
+npm test
+```
+
+ClinicFlow uses Node.js's built-in test runner. The tests cover authentication middleware, role-based authorization, and selected patient API route behavior.
+
+The patient route tests use a test-only Express app and mocked controller functions. They do not verify MongoDB persistence or full end-to-end database behavior.
+
+### Dependency security audits
+
+Audit backend production dependencies:
+
+```powershell
+npm audit --omit=dev
+```
+
+Audit frontend production dependencies:
+
+```powershell
+npm --prefix ".\client" audit --omit=dev
+```
+
+Review any newly reported vulnerabilities before release. Do not apply dependency updates blindly; check compatibility and rerun tests after updates.
+
+### Frontend quality and production build
+
+Run the frontend linter:
+
+```powershell
+npm --prefix ".\client" run lint
+```
+
+Build the frontend for production:
+
+```powershell
+npm --prefix ".\client" run build
+```
+
+Review build output for bundle-size warnings. A successful build confirms that Vite can produce the frontend bundle, but it does not by itself prove runtime correctness or production performance.
+
+### Security notes
+
+- Authentication is checked using JWT bearer tokens.
+- Patient creation and updates are restricted to Admin and Receptionist roles.
+- Patient deletion is restricted to the Admin role.
+- The Express application uses Helmet security headers and limits JSON request bodies.
+- Never commit `.env` files, JWT secrets, database credentials, or other private credentials.
+- Automated route tests use a test-only JWT secret and mocked patient controllers.
+
+### Validation scope
+
+Automated middleware and route tests verify selected authentication and authorization behavior. They do not replace full integration tests against a dedicated test database, manual browser testing, or production deployment verification.
