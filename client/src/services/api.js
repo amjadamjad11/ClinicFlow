@@ -318,4 +318,8 @@ export async function updateBilling(billingId, billingData) {
 
 // Export apiRequest for any future frontend API functions
 // that need the common request behavior directly.
+
+export async function getDashboardSummary() {
+    return apiRequest("/api/dashboard/summary");
+}
 export default apiRequest;

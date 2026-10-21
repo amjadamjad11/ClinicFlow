@@ -791,3 +791,41 @@ Implemented the Billing Management interface and connected it to the existing bi
 - Verified that the View Details link opens the selected bill.
 
 **Note:** The backend calculates the final bill total and enforces authorization. Frontend role-based visibility is not a substitute for backend access control.
+
+## Dashboard & Clinic Analytics
+
+ClinicFlow includes an authenticated dashboard that provides a consolidated overview of clinic operations using live data from the backend API.
+
+### Dashboard Features
+
+- **Patient Statistics:** Displays the total number of registered patients.
+- **Doctor Statistics:** Displays the total number of registered doctors.
+- **Appointment Overview:** Shows total appointments, today's appointments, and appointment status counts.
+- **Today's Appointments:** Lists patients and doctors associated with today's scheduled visits.
+- **Upcoming Appointments:** Displays upcoming appointments for quick reference.
+- **Monthly Performance:** Summarizes monthly appointment activity, completed appointments, and paid revenue.
+- **Billing Overview:** Displays pending bills, paid bills, cancelled bills, and total paid revenue.
+- **Doctor Activity:** Summarizes appointment counts by doctor.
+- **Loading and Error States:** Provides feedback while dashboard data loads and when a request fails.
+- **Responsive Design:** Uses dashboard-specific CSS and responsive layouts for different screen sizes.
+
+### Technical Implementation
+
+- **Frontend:** React, React Hooks, and CSS.
+- **Backend:** Existing Express dashboard endpoint.
+- **API Endpoint:** `GET /api/dashboard/summary`
+- **Authentication:** Uses the existing authenticated API request utility to attach the user's JWT.
+- **Authorization:** The backend restricts dashboard access to the Admin, Doctor, and Receptionist roles.
+- **Data Source:** Dashboard statistics and appointment summaries are retrieved from the backend rather than hardcoded in the frontend.
+
+### Dashboard Files
+
+- `client/src/pages/DashboardPage.jsx` — Dashboard interface, API loading, statistics, and appointment summaries.
+- `client/src/pages/DashboardPage.css` — Dashboard layout, cards, status indicators, and responsive styling.
+- `client/src/services/api.js` — Shared API service, including `getDashboardSummary()`.
+
+### Verification
+
+- Frontend production build completed successfully using `npm run build`.
+- Dashboard loaded successfully in the browser.
+- Dashboard statistics, appointment summaries, billing information, and doctor activity were verified in the running application.
