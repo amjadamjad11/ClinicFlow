@@ -281,6 +281,41 @@ export async function deletePrescription(prescriptionId) {
     });
 }
 
+
+/*
+ * BILLING API FUNCTIONS
+ *
+ * These functions connect the Billing UI to the existing backend.
+ * apiRequest automatically includes the authentication token.
+ */
+
+// Retrieve all billing records, newest first.
+export async function getBillings() {
+    return apiRequest("/api/billing");
+}
+
+// Retrieve one billing record using its MongoDB ID.
+export async function getBilling(billingId) {
+    return apiRequest(`/api/billing/${billingId}`);
+}
+
+// Create a bill for an existing consultation.
+export async function createBilling(billingData) {
+    return apiRequest("/api/billing", {
+        method: "POST",
+        body: JSON.stringify(billingData),
+    });
+}
+
+// Update an existing bill.
+// The backend recalculates the total from the charge fields.
+export async function updateBilling(billingId, billingData) {
+    return apiRequest(`/api/billing/${billingId}`, {
+        method: "PUT",
+        body: JSON.stringify(billingData),
+    });
+}
+
 // Export apiRequest for any future frontend API functions
 // that need the common request behavior directly.
 export default apiRequest;

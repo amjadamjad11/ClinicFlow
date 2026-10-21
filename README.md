@@ -761,3 +761,33 @@ Implemented dedicated details pages for consultations and prescriptions in the C
 - `client/src/pages/ConsultationsPage.jsx`
 - `client/src/pages/PrescriptionsPage.jsx`
 - `client/src/pages/ConsultationDetails
+
+### Billing Management UI
+
+Implemented the Billing Management interface and connected it to the existing billing backend.
+
+**Features**
+- View existing billing records in a table.
+- Create bills for consultations that have not already been billed.
+- Enter consultation fees, medicine charges, and other charges.
+- Automatically calculate and preview the total amount.
+- Select payment status: Pending, Paid, or Cancelled.
+- Select payment method: Cash, Card, UPI, or Insurance.
+- View detailed billing information, including patient, doctor, consultation, charge breakdown, payment information, and notes.
+- Display loading, error, and success messages.
+- Apply role-based UI visibility for bill creation: Admin and Receptionist.
+- Reuse shared form components and the existing authenticated API service.
+
+**Frontend files**
+- `client/src/pages/BillingPage.jsx` — billing list and bill creation form.
+- `client/src/pages/BillingDetailsPage.jsx` — individual bill details.
+- `client/src/services/api.js` — billing API functions.
+- `client/src/App.jsx` — protected billing routes.
+- `client/src/components/Navbar.jsx` — Billing navigation link.
+
+**Testing**
+- Production build completed successfully with Vite.
+- Verified that bills can be created and appear in the billing list.
+- Verified that the View Details link opens the selected bill.
+
+**Note:** The backend calculates the final bill total and enforces authorization. Frontend role-based visibility is not a substitute for backend access control.
